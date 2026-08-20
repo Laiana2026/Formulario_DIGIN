@@ -2192,7 +2192,7 @@
         // Función para consultar las secuencias reales desde la base de datos (Backend Node.js)
         async function cargarSecuenciasDesdeBD() {
             try {
-                const response = await fetch("http://localhost:3000/api/secuencias");
+                const response = await fetch("https://tu-backend-digin.com/api/secuencias");
                 const resultado = await response.json();
                 
                 if (resultado.success) {
@@ -2855,7 +2855,7 @@ formOperativo.addEventListener("submit", async function (e) {
     try {
 
         const response = await fetch(
-            "http://localhost:3000/api/operaciones",
+            "https://tu-backend-digin.com/api/operaciones",
             {
                 method: "POST",
 
