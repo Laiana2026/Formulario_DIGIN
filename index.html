@@ -1,0 +1,2924 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulario de REGISTRO DE OPERACIONES DIGIN</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f4f6f9;
+        color: #333;
+      }
+      .form-container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        text-align: center;
+        color: #1a365d;
+      }
+      fieldset {
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        padding: 15px;
+        margin-bottom: 20px;
+        background-color: #fafafa;
+      }
+      legend {
+        font-weight: bold;
+        color: #0f172a;
+        padding: 0 8px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+      label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+        text-transform: uppercase;
+        color: #475569;
+      }
+      input,
+      select,
+      textarea {
+        padding: 8px;
+        border: 1px solid #94a3b8;
+        border-radius: 4px;
+        font-size: 0.9rem;
+      }
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+      }
+      input[readonly],
+      select:disabled {
+        background-color: #e2e8f0;
+        color: #475569;
+        cursor: not-allowed;
+      }
+      .full-width {
+        grid-column: 1 / -1;
+      }
+
+      /* Estilo destacado para campos auto-calculados */
+      input.campo-autocalculado {
+        background-color: #f1f5f9;
+        font-weight: bold;
+        color: #1e3a8a;
+        border-color: #cbd5e1;
+      }
+
+      /* Estilos para contenedores de Selección Múltiple (Checkboxes) */
+      .checkbox-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 10px;
+        max-height: 200px;
+        overflow-y: auto;
+        border: 1px solid #94a3b8;
+        padding: 12px;
+        border-radius: 4px;
+        background-color: #fff;
+      }
+      .checkbox-grid-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        max-height: 240px;
+        overflow-y: auto;
+        border: 1px solid #94a3b8;
+        padding: 12px;
+        border-radius: 4px;
+        background-color: #fff;
+      }
+      .checkbox-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: #334155;
+        cursor: pointer;
+      }
+      .checkbox-item input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+
+      /* Contenedor dinámico de infractores */
+      .infractor-card {
+        border: 1px dashed #94a3b8;
+        padding: 15px;
+        border-radius: 6px;
+        margin-bottom: 15px;
+        background-color: #fff;
+        position: relative;
+      }
+      .infractor-card h4 {
+        margin-top: 0;
+        margin-bottom: 12px;
+        color: #1e40af;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+      }
+
+      .btn-submit {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background-color: #1e40af;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+      .btn-submit:hover {
+        background-color: #1d4ed8;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <h1>REGISTRO DE OPERACIONES DIGIN</h1>
+      <form>
+        <!-- INFORMACIÓN GENERAL Y UBICACIÓN -->
+        <fieldset>
+          <legend>Información General y Ubicación</legend>
+          <div class="grid">
+            <div class="form-group">
+              <label for="marca_temporal">Marca temporal</label>
+              <input type="datetime-local" id="marca_temporal" name="marca_temporal" readonly="" />
+            </div>
+            <div class="form-group">
+              <label for="ingrese_fecha">Ingrese la fecha</label>
+              <input type="date" id="ingrese_fecha" name="ingrese_fecha" />
+            </div>
+            <div class="form-group">
+              <label for="ingrese_hora">Ingrese la hora</label>
+              <input type="time" id="ingrese_hora" name="ingrese_hora" />
+            </div>
+<div class="form-group full-width">
+  <label for="nombre_operacion">Nombre de la Operación (Calculado)</label>
+  <input type="text" id="nombre_operacion" name="nombre_operacion" readonly>
+</div>
+            <div class="form-group">
+              <label for="elija_direccion">Elija Dirección Interventora</label>
+              <select id="elija_direccion" name="elija_direccion">
+                <option value="" disabled="" selected="">Seleccione una opción...</option>
+                <option value="DINAF">DINAF</option>
+                <option value="DINASED">DINASED</option>
+                <option value="DINIC">DINIC</option>
+                <option value="DINITEC">DINITEC</option>
+                <option value="DNA">DNA</option>
+                <option value="DINASI">DINASI</option>
+                <option value="DNPJ">DNPJ</option>
+                <option value="UNIDADES_TRANSVERSALES">UNIDADES_TRANSVERSALES</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="elija_unidad">Elija Unidad Interventora</label>
+              <select id="elija_unidad" name="elija_unidad" disabled="">
+                <option value="" disabled="" selected="">Primero seleccione una Dirección...</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="subzonaSelect">Subzona</label>
+              <select id="subzonaSelect" name="subzona">
+                <option value="" disabled="" selected="">Seleccione una subzona...</option>
+                <option value="AZUAY">AZUAY</option>
+                <option value="BOLÍVAR">BOLÍVAR</option>
+                <option value="CAÑAR">CAÑAR</option>
+                <option value="CARCHI">CARCHI</option>
+                <option value="CHIMBORAZO">CHIMBORAZO</option>
+                <option value="COTOPAXI">COTOPAXI</option>
+                <option value="DMG">DMG</option>
+                <option value="DMQ">DMQ</option>
+                <option value="EL ORO">EL ORO</option>
+                <option value="ESMERALDAS">ESMERALDAS</option>
+                <option value="GALÁPAGOS">GALÁPAGOS</option>
+                <option value="GUAYAS">GUAYAS</option>
+                <option value="IMBABURA">IMBABURA</option>
+                <option value="LOJA">LOJA</option>
+                <option value="LOS RÍOS">LOS RÍOS</option>
+                <option value="MANABÍ">MANABÍ</option>
+                <option value="MORONA SANTIAGO">MORONA SANTIAGO</option>
+                <option value="NAPO">NAPO</option>
+                <option value="ORELLANA">ORELLANA</option>
+                <option value="PASTAZA">PASTAZA</option>
+                <option value="PICHINCHA">PICHINCHA</option>
+                <option value="SANTA ELENA">SANTA ELENA</option>
+                <option value="STO DGO DE LOS TSÁCHILAS">STO DGO DE LOS TSÁCHILAS</option>
+                <option value="SUCUMBÍOS">SUCUMBÍOS</option>
+                <option value="TUNGURAHUA">TUNGURAHUA</option>
+                <option value="ZAMORA CHINCHIPE">ZAMORA CHINCHIPE</option>
+              </select>
+            </div>
+
+            <div class="form-group full-width">
+              <label>Subzonas Intervenidas</label>
+              <div class="checkbox-grid">
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="AZUAY" />
+                  AZUAY
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="BOLÍVAR" />
+                  BOLÍVAR
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="CAÑAR" />
+                  CAÑAR
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="CARCHI" />
+                  CARCHI
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="CHIMBORAZO" />
+                  CHIMBORAZO
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="COTOPAXI" />
+                  COTOPAXI
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="DMG" />
+                  DMG
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="DMQ" />
+                  DMQ
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="EL ORO" />
+                  EL ORO
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="ESMERALDAS" />
+                  ESMERALDAS
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="GALÁPAGOS" />
+                  GALÁPAGOS
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="GUAYAS" />
+                  GUAYAS
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="IMBABURA" />
+                  IMBABURA
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="LOJA" />
+                  LOJA
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="LOS RÍOS" />
+                  LOS RÍOS
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="MANABÍ" />
+                  MANABÍ
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="MORONA SANTIAGO" />
+                  MORONA SANTIAGO
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="NAPO" />
+                  NAPO
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="ORELLANA" />
+                  ORELLANA
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="PASTAZA" />
+                  PASTAZA
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="PICHINCHA" />
+                  PICHINCHA
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="SANTA ELENA" />
+                  SANTA ELENA
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="STO DGO DE LOS TSÁCHILAS" />
+                  STO DGO DE LOS TSÁCHILAS
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="SUCUMBÍOS" />
+                  SUCUMBÍOS
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="TUNGURAHUA" />
+                  TUNGURAHUA
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="subzonas_in[]" value="ZAMORA CHINCHIPE" />
+                  ZAMORA CHINCHIPE
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="distritoSelect">Distrito</label>
+              <select id="distritoSelect" name="distrito" disabled="">
+                <option value="">Primero seleccione Subzona...</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="circuitoSelect">Circuito</label>
+              <select id="circuitoSelect" name="circuito" disabled="">
+                <option value="">Primero seleccione Distrito...</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="latitud">Latitud</label>
+              <input type="text" id="latitud" name="latitud" placeholder="-2,8974" inputmode="decimal" />
+            </div>
+            <div class="form-group">
+              <label for="longitud">Longitud</label>
+              <input type="text" id="longitud" name="longitud" placeholder="-78,9842" inputmode="decimal" />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- DETALLES DEL EVENTO O DELITO -->
+        <fieldset>
+          <legend>Detalles del Evento</legend>
+          <div class="grid">
+            <div class="form-group">
+              <label for="presunto_de">Presunto Delito Intervenido</label>
+              <select id="presunto_de" name="presunto_de">
+                <option value="" disabled="" selected="">Seleccione una opción...</option>
+                <option value="ABANDONO DE PERSONA">ABANDONO DE PERSONA</option>
+                <option value="ABIGEATO">ABIGEATO</option>
+                <option value="ABOLICION Y SUSPENSION DE DERECHOS DE PERSONA PROTEGIDA">
+                  ABOLICION Y SUSPENSION DE DERECHOS DE PERSONA PROTEGIDA
+                </option>
+                <option value="ABORTO CON MUERTE">ABORTO CON MUERTE</option>
+                <option value="ABORTO CONSENTIDO">ABORTO CONSENTIDO</option>
+                <option value="ABORTO NO CONSENTIDO">ABORTO NO CONSENTIDO</option>
+                <option value="ABORTO NO PUNIBLE">ABORTO NO PUNIBLE</option>
+                <option value="ABSTENCION DE LA EJECUCION DE OPERACIONES EN CONMOCION INTERNA">
+                  ABSTENCION DE LA EJECUCION DE OPERACIONES EN CONMOCION INTERNA
+                </option>
+                <option value="ABUSO DE ARMA DE FUEGO">ABUSO DE ARMA DE FUEGO</option>
+                <option value="ABUSO DE CONFIANZA">ABUSO DE CONFIANZA</option>
+                <option value="ABUSO DE EMBLEMAS">ABUSO DE EMBLEMAS</option>
+                <option value="ABUSO DE FACULTADES">ABUSO DE FACULTADES</option>
+                <option value="ABUSO SEXUAL">ABUSO SEXUAL</option>
+                <option value="ACCESO NO CONSENTIDO A UN SISTEMA INFORMATICO, TELEMATICO O DE TELECOMUNICACIONES">
+                  ACCESO NO CONSENTIDO A UN SISTEMA INFORMATICO, TELEMATICO O DE TELECOMUNICACIONES
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="tipo_ejecu">Tipo Ejecución Operación</label>
+              <select id="tipo_ejecu" name="tipo_ejecu">
+                <option value="" disabled="" selected="">Seleccione una opción...</option>
+                <option value="ACTO URGENTE">ACTO URGENTE</option>
+                <option value="BOLETA DE DETENCIÓN">BOLETA DE DETENCIÓN</option>
+                <option value="FLAGRANCIA">FLAGRANCIA</option>
+                <option value="INVESTIGACIÓN PREVIA">INVESTIGACIÓN PREVIA</option>
+                <option value="ACTO ADMINISTRATIVO">ACTO ADMINISTRATIVO</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="tipo_de_coor">Tipo de Coordinación</label>
+              <select id="tipo_de_coor" name="tipo_de_coor">
+                <option value="" disabled="" selected="">Seleccione una opción...</option>
+                <option value="COORDINACION INSTITUCIONAL">COORDINACION INSTITUCIONAL</option>
+                <option value="COORDINACION INTERNACIONAL">COORDINACION INTERNACIONAL</option>
+                <option value="ACTO ADMINISTRATIVO">ACTO ADMINISTRATIVO</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="caracteriza">Caracterización del Aprehendido/Detenido</label>
+              <select id="caracteriza" name="caracteriza">
+                <option value="" disabled="" selected="">Seleccione una opción...</option>
+                <option value="ADMINISTRACIÓN DE JUSTICIA">ADMINISTRACIÓN DE JUSTICIA</option>
+                <option value="ASAMBLEISTAS">ASAMBLEISTAS</option>
+                <option value="DELINCUENCIA COMÚN">DELINCUENCIA COMÚN</option>
+                <option value="DIFUSIÓN ROJA">DIFUSIÓN ROJA</option>
+                <option value="FISCALES">FISCALES</option>
+                <option value="FUNCIONARIO DE GOBIERNO">FUNCIONARIO DE GOBIERNO</option>
+                <option value="INDIVIDUOS DE INTERÉS PENAL RELEVANTE (IIPR)">
+                  INDIVIDUOS DE INTERÉS PENAL RELEVANTE (IIPR)
+                </option>
+                <option value="INTEGRANTE DE GRUPO DE DELINCUENCIA ORGANIZADA (GDO)">
+                  INTEGRANTE DE GRUPO DE DELINCUENCIA ORGANIZADA (GDO)
+                </option>
+                <option value="JUECES">JUECES</option>
+                <option value="MÁS BUSCADO">MÁS BUSCADO</option>
+                <option value="MILITARES">MILITARES</option>
+                <option value="MINISTROS">MINISTROS</option>
+                <option value="OBJETIVO DE ALTO VALOR (OAV)">OBJETIVO DE ALTO VALOR (OAV)</option>
+                <option value="POLICIAS">POLICIAS</option>
+                <option value="SERVIDORES PÚBLICOS">SERVIDORES PÚBLICOS</option>
+                <option value="ACTO ADMINISTRATIVO">ACTO ADMINISTRATIVO</option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label for="extracto_de">Extracto del Evento</label>
+              <textarea id="extracto_de" name="extracto_de" rows="3"></textarea>
+            </div>
+
+            <!-- DATOS ADICIONALES (SELECCIÓN MÚLTIPLE / CHECKBOXES) -->
+            <div class="form-group full-width">
+              <label>Datos Adicionales del Operativo</label>
+              <div class="checkbox-grid-list">
+                <label class="checkbox-item">
+                  <input type="checkbox" name="datos_adicionales[]" value="AL MENOS UN DETENIDO ES MENOR DE EDAD?" />
+                  AL MENOS UN DETENIDO ES MENOR DE EDAD?
+                </label>
+                <label class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="datos_adicionales[]"
+                    value="AL MENOS UN DETENIDO PERTENECE A UNA ORGANIZACION DELICTIVA?"
+                  />
+                  AL MENOS UN DETENIDO PERTENECE A UNA ORGANIZACION DELICTIVA?
+                </label>
+                <label class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="datos_adicionales[]"
+                    value="AL MENOS UN DETENIDO PORTABA ARMAS DE FUEGO?"
+                  />
+                  AL MENOS UN DETENIDO PORTABA ARMAS DE FUEGO?
+                </label>
+                <label class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="datos_adicionales[]"
+                    value="AL MENOS UN DETENIDO REGISTRA ANTECEDENTES PENALES?"
+                  />
+                  AL MENOS UN DETENIDO REGISTRA ANTECEDENTES PENALES?
+                </label>
+                <label class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="datos_adicionales[]"
+                    value="DIFERENCIAS FINANCIERAS INUSUALES E INJUSTIFICADAS QUE SUPEREN LOS $ 100.000?"
+                  />
+                  DIFERENCIAS FINANCIERAS INUSUALES E INJUSTIFICADAS QUE SUPEREN LOS $ 100.000?
+                </label>
+                <label class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="datos_adicionales[]"
+                    value="EL ACCESO AL LUGAR DE LA OPERACION FUE COMPLEJO?"
+                  />
+                  EL ACCESO AL LUGAR DE LA OPERACION FUE COMPLEJO?
+                </label>
+                <label class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="datos_adicionales[]"
+                    value="EL APREHENDIDO/DETENIDO ES UN OBJETIVO DE ALTO VALOR (OAV)?"
+                  />
+                  EL APREHENDIDO/DETENIDO ES UN OBJETIVO DE ALTO VALOR (OAV)?
+                </label>
+                <label class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="datos_adicionales[]"
+                    value="EL APREHENDIDO/DETENIDO ES UN INDIVIDUO DE INTERÉS PENAL RELEVANTE (IIPR)?"
+                  />
+                  EL APREHENDIDO/DETENIDO ES UN INDIVIDUO DE INTERÉS PENAL RELEVANTE (IIPR)?
+                </label>
+                <label class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="datos_adicionales[]"
+                    value="EL OPERATIVO, INVESTIGACION, APREHENDIDOS-DETENIDOS FUE REALIZADO DESDE UN INICIO POR DIRECCIÓN/UNIDAD..."
+                  />
+                  EL OPERATIVO, INVESTIGACION, APREHENDIDOS-DETENIDOS FUE REALIZADO DESDE UN INICIO POR
+                  DIRECCIÓN/UNIDAD...
+                </label>
+                <label class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="datos_adicionales[]"
+                    value="EL/LOS DETENIDOS POSEEN ORDENES DE DETENCION VIGENTE?"
+                  />
+                  EL/LOS DETENIDOS POSEEN ORDENES DE DETENCION VIGENTE?
+                </label>
+                <label class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="datos_adicionales[]"
+                    value="EN EL CASO U OPERATIVO REALIZADO SE LOGRO LA APREHENSION DE AERONAVES?"
+                  />
+                  EN EL CASO U OPERATIVO REALIZADO SE LOGRO LA APREHENSION DE AERONAVES?
+                </label>
+                <label class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="datos_adicionales[]"
+                    value="EN EL CASO U OPERATIVO REALIZADO SE LOGRO LA APREHENSION DE EMBARCACIONES?"
+                  />
+                  EN EL CASO U OPERATIVO REALIZADO SE LOGRO LA APREHENSION DE EMBARCACIONES?
+                </label>
+                <label class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="datos_adicionales[]"
+                    value="EN EL CASO U OPERATIVO REALIZADO SE LOGRO LA DETENCION DE UNA O VARIAS PERSONAS QUE SE ENCONTRABAN EN LA LISTA DE LOS MÁS BUSCADOS?"
+                  />
+                  EN EL CASO U OPERATIVO REALIZADO SE LOGRO LA DETENCION DE UNA O VARIAS PERSONAS QUE SE ENCONTRABAN EN
+                  LA LISTA DE LOS MÁS BUSCADOS?
+                </label>
+                <label class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="datos_adicionales[]"
+                    value="EXISTIO CON LA VINCULACION, 3 O MAS PERSONAS NATURALES O JURIDICAS PROCESADAS?"
+                  />
+                  EXISTIO CON LA VINCULACION, 3 O MAS PERSONAS NATURALES O JURIDICAS PROCESADAS?
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="datos_adicionales[]" value="EXISTIO ENFRENTAMIENTO ARMADO?" />
+                  EXISTIO ENFRENTAMIENTO ARMADO?
+                </label>
+                <label class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="datos_adicionales[]"
+                    value="EXISTIO EVIDENCIA DIGITAL POR OTROS DELITOS INFORMATICOS (NO RELACIONADOS A PORNOGRAFIA INFANTIL)?"
+                  />
+                  EXISTIO EVIDENCIA DIGITAL POR OTROS DELITOS INFORMATICOS (NO RELACIONADOS A PORNOGRAFIA INFANTIL)?
+                </label>
+                <label class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="datos_adicionales[]"
+                    value="EXISTIO EVIDENCIA DIGITAL POR PORNOGRAFIA INFANTIL?"
+                  />
+                  EXISTIO EVIDENCIA DIGITAL POR PORNOGRAFIA INFANTIL?
+                </label>
+                <label class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    name="datos_adicionales[]"
+                    value="EXISTIO INDICIOS RELACIONADOS EN LA INTERVENCION?"
+                  />
+                  EXISTIO INDICIOS RELACIONADOS EN LA INTERVENCION?
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group full-width">
+  <label>Resultados e Indicios del Operativo</label>
+  <div class="checkbox-grid-list">
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="AERONAVES" /> AERONAVES</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="AMETRALLADORAS" /> AMETRALLADORAS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="ARMAS BLANCAS" /> ARMAS BLANCAS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="AUDITORÍAS DE SEGURIDAD" /> AUDITORÍAS DE SEGURIDAD</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="BAZUCA" /> BAZUCA</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="BOTELLAS DE LICOR (UND)" /> BOTELLAS DE LICOR (UND)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="CANTIDAD APREHENDIDOS" /> CANTIDAD APREHENDIDOS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="CANTIDAD AUTOPARTES VEHÍCULOS" /> CANTIDAD AUTOPARTES VEHÍCULOS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="CANTIDAD DE ALLANAMIENTOS" /> CANTIDAD DE ALLANAMIENTOS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="CANTIDAD DE BIENES INMUEBLES INCAUTADOS" /> CANTIDAD DE BIENES INMUEBLES INCAUTADOS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="CANTIDAD DE DINERO EN CUENTAS BANCARIAS ($)" /> CANTIDAD DE DINERO EN CUENTAS BANCARIAS ($)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="CANTIDAD DE INVESTIGACIONES PREVIAS APERTURADAS" /> CANTIDAD DE INVESTIGACIONES PREVIAS APERTURADAS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="CANTIDAD DETENIDOS" /> CANTIDAD DETENIDOS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="CANTIDAD PERSONAS DESAPARECIDAS LOCALIZADAS" /> CANTIDAD PERSONAS DESAPARECIDAS LOCALIZADAS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="CAÑÓN" /> CAÑÓN</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="CÁPSULAS DETONANTES (UND)" /> CÁPSULAS DETONANTES (UND)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="CARABINA" /> CARABINA</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="CARROS APREHENDIDOS" /> CARROS APREHENDIDOS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="CARROS RECUPERADOS" /> CARROS RECUPERADOS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="CARTUCHERA" /> CARTUCHERA</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="CELULARES (UND)" /> CELULARES (UND)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="CERTIFICADOS DE ARMAS ENTREGADO" /> CERTIFICADOS DE ARMAS ENTREGADO</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="CIGARRILLOS (UND)" /> CIGARRILLOS (UND)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="CLORURO DE CALCIO (KG)" /> CLORURO DE CALCIO (KG)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="COCAÍNA (GRAMOS)" /> COCAÍNA (GRAMOS)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="COINCIDENCIAS DE POTENCIALES DE VAINAS" /> COINCIDENCIAS DE POTENCIALES DE VAINAS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="CONTRABANDO (UND)" /> CONTRABANDO (UND)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="CONTRABANDO MONETIZADO ($)" /> CONTRABANDO MONETIZADO ($)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="COORDINACIONES CON UPC" /> COORDINACIONES CON UPC</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="COORDINACIONES REALIZADAS" /> COORDINACIONES REALIZADAS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="DEPÓSITO DE DINERO REAL" /> DEPÓSITO DE DINERO REAL</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="DESTILADORES" /> DESTILADORES</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="DESTRUCCIÓN DE DINERO FALSO" /> DESTRUCCIÓN DE DINERO FALSO</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="DIÉSEL (GALONES)" /> DIÉSEL (GALONES)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="DISPOSICIÓN FINAL DE ARMAS DE FUEGO" /> DISPOSICIÓN FINAL DE ARMAS DE FUEGO</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="DISPOSICIÓN FINAL DE AUTOMOTORES" /> DISPOSICIÓN FINAL DE AUTOMOTORES</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="DISPOSICIÓN FINAL DE BIENES MUEBLES E INMUEBLES" /> DISPOSICIÓN FINAL DE BIENES MUEBLES E INMUEBLES</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="DISPOSICIÓN FINAL DE MUNICIONES" /> DISPOSICIÓN FINAL DE MUNICIONES</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="DÓLARES AMERICANOS ($)" /> DÓLARES AMERICANOS ($)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="DÓLARES FALSOS ($)" /> DÓLARES FALSOS ($)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="DROGAS SINTÉTICAS (GRAMOS)" /> DROGAS SINTÉTICAS (GRAMOS)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="ELECTRODOMÉSTICOS (UND)" /> ELECTRODOMÉSTICOS (UND)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="EMBARCACIONES" /> EMBARCACIONES</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="ESCOPETA" /> ESCOPETA</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="FAUNA SILVESTRE (UND)" /> FAUNA SILVESTRE (UND)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="FULMINANTES (UND)" /> FULMINANTES (UND)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="FUSIL" /> FUSIL</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="GASOLINA (GALONES)" /> GASOLINA (GALONES)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="GASOLINA DE PESCA (GALONES)" /> GASOLINA DE PESCA (GALONES)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="GLP (15 - 45 KG) (UND)" /> GLP (15 - 45 KG) (UND)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="GRANADAS (UND)" /> GRANADAS (UND)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="HEROÍNA (GRAMOS)" /> HEROÍNA (GRAMOS)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="INFORMES DE ANÁLISIS" /> INFORMES DE ANÁLISIS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="INFORMES RELEVANTES (SMS-AUDIOS)" /> INFORMES RELEVANTES (SMS-AUDIOS)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="LABORATORIOS PROCESAMIENTO DROGA" /> LABORATORIOS PROCESAMIENTO DROGA</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="LANZA GRANADA" /> LANZA GRANADA</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="MADERA (M³)" /> MADERA (M³)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="MAQUINARIA PESADA (UND)" /> MAQUINARIA PESADA (UND)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="MARIHUANA (GRAMOS)" /> MARIHUANA (GRAMOS)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="MATERIAL AURÍFERO (KG)" /> MATERIAL AURÍFERO (KG)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="MECHA LENTA CORDÓN DETONANTE (M)" /> MECHA LENTA CORDÓN DETONANTE (M)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="MINAS DETONANTES (UND)" /> MINAS DETONANTES (UND)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="MORTERO" /> MORTERO</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="MOTORES FUERA DE BORDA" /> MOTORES FUERA DE BORDA</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="MOTOS APREHENDIDAS" /> MOTOS APREHENDIDAS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="MOTOS RECUPERADAS" /> MOTOS RECUPERADAS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="MUNICIONES" /> MUNICIONES</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="N.N.A RECUPERADOS POR RETENCIÓN INDEBIDA" /> N.N.A RECUPERADOS POR RETENCIÓN INDEBIDA</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="N.N.A RESCATADOS" /> N.N.A RESCATADOS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="N°. CASOS ANALIZADOS" /> N°. CASOS ANALIZADOS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="N°. CASOS RESUELTOS" /> N°. CASOS RESUELTOS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="N°. CUENTAS BANCARIAS" /> N°. CUENTAS BANCARIAS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="N°. DE MONEDEROS DE ACTIVOS VIRTUALES BLOQUEADOS" /> N°. DE MONEDEROS DE ACTIVOS VIRTUALES BLOQUEADOS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="N°. DE NOTIFICACIONES/DIFUSIONES EMITIDAS" /> N°. DE NOTIFICACIONES/DIFUSIONES EMITIDAS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="N°. DE VÍCTIMAS" /> N°. DE VÍCTIMAS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="N°. SOSPECHOSOS IDENTIFICADOS" /> N°. SOSPECHOSOS IDENTIFICADOS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="NITRATO DE AMONIO (KG)" /> NITRATO DE AMONIO (KG)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="OPERATIVOS DE TRASLADO" /> OPERATIVOS DE TRASLADO</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="ÓRDENES JUDICIALES DE ANÁLISIS TELEFÓNICO CUMPLIDAS" /> ÓRDENES JUDICIALES DE ANÁLISIS TELEFÓNICO CUMPLIDAS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="OTRAS ARMAS DE FUEGO" /> OTRAS ARMAS DE FUEGO</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="OTRAS DROGAS (GRAMOS)" /> OTRAS DROGAS (GRAMOS)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="PARES DE CALZADO (UND)" /> PARES DE CALZADO (UND)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="PASTA BASE DE COCAÍNA (GRAMOS)" /> PASTA BASE DE COCAÍNA (GRAMOS)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="PATRIMONIO CULTURAL (UND)" /> PATRIMONIO CULTURAL (UND)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="PENTOLITA (KG)" /> PENTOLITA (KG)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="PERDIGONES (UND)" /> PERDIGONES (UND)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="PERFORACIONES" /> PERFORACIONES</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="PERICIAS ACCIDENTOLOGÍA VIAL" /> PERICIAS ACCIDENTOLOGÍA VIAL</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="PERICIAS CRIMINALÍSTICA" /> PERICIAS CRIMINALÍSTICA</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="PERICIAS MEDICINA LEGAL" /> PERICIAS MEDICINA LEGAL</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="PERSONAS LIBERADAS" /> PERSONAS LIBERADAS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="PERSONAS PROTEGIDAS" /> PERSONAS PROTEGIDAS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="PIROTECNIA (UND)" /> PIROTECNIA (UND)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="PISCINAS ARTESANALES DE CLDH" /> PISCINAS ARTESANALES DE CLDH</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="PISTOLA" /> PISTOLA</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="PISTOLÓN" /> PISTOLÓN</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="PÓLVORA (KG)" /> PÓLVORA (KG)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="PRENDAS DE VESTIR (UND)" /> PRENDAS DE VESTIR (UND)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="PRODUCTOS AGRÍCOLAS (BULTOS)" /> PRODUCTOS AGRÍCOLAS (BULTOS)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="QUÍMICOS LÍQUIDOS (LT)" /> QUÍMICOS LÍQUIDOS (LT)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="QUÍMICOS SÓLIDOS (KG)" /> QUÍMICOS SÓLIDOS (KG)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="REGISTRO DE MEDIDAS CAUTELARES" /> REGISTRO DE MEDIDAS CAUTELARES</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="REPETIDORA" /> REPETIDORA</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="REPORTES TELEFÓNICOS ENTREGADOS" /> REPORTES TELEFÓNICOS ENTREGADOS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="REVÓLVER" /> REVÓLVER</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="RIFLE" /> RIFLE</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="SEMOVIENTES (UND)" /> SEMOVIENTES (UND)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="SUBAMETRALLADORA" /> SUBAMETRALLADORA</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="TACOS DE DINAMITA (UND)" /> TACOS DE DINAMITA (UND)</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="TRASLADO DE INDICIOS BAJO PEDIDO DE AUTORIDAD COMPETENTE" /> TRASLADO DE INDICIOS BAJO PEDIDO DE AUTORIDAD COMPETENTE</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="VALOR DE ACTIVOS INCAUTADOS" /> VALOR DE ACTIVOS INCAUTADOS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="VALOR DE LOS BIENES INMUEBLES INCAUTADOS" /> VALOR DE LOS BIENES INMUEBLES INCAUTADOS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="VARIOS OBJETOS" /> VARIOS OBJETOS</label>
+    <label class="checkbox-item"><input type="checkbox" name="resultados[]" value="VÍCTIMAS RESCATADAS" /> VÍCTIMAS RESCATADAS</label>
+  </div>
+</div>
+ </fieldset>
+
+        <!-- PERSONAS Y DETENIDOS -->
+        <fieldset>
+          <legend>Personas / Detenidos / Víctimas</legend>
+          <div class="grid">
+            <div class="form-group">
+  <label for="cantidad_de_allanamientos">Cantidad de Allanamientos</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="cantidad_de_allanamientos"
+    name="cantidad_de_allanamientos"
+  />
+</div>
+<div class="form-group">
+ <label for="cantidad_detenidos">Cantidad Detenidos</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="cantidad_detenidos"
+    name="cantidad_detenidos"
+  />
+</div>
+<div class="form-group">
+ <label for="cantidad_ap">Cantidad Aprehendidos</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="cantidad_aprehendidos"
+    name="cantidad_aprehendidos"
+  />
+</div>
+<div class="form-group">
+ <label for="cantidad_de_ho">Cantidad Hombres</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="cantidad_de_ho"
+    name="cantidad_de_ho"
+  />
+</div>
+<div class="form-group">
+ <label for="cantidad_mu">Cantidad Mujeres</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="cantidad_mu"
+    name="cantidad_mu"
+  />
+</div>
+<div class="form-group">
+ <label for="victimas_res">Víctimas Rescatadas</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="victimas_res"
+    name="victimas_res"
+  />
+</div>
+<div class="form-group">
+ <label for="personas_lie">Personas Liberadas</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="personas_lie"
+    name="personas_lie"
+  />
+</div>
+<div class="form-group">
+ <label for="nna_rescat">N.N.A Rescatados</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="nna_rescat"
+    name="nna_rescat"
+  />
+</div>
+<div class="form-group">
+ <label for="nna_recup">N.N.A Recuperados por Retención Indebida</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="nna_recup"
+    name="nna_recup"
+  />
+</div>
+<div class="form-group">
+ <label for="cantidad_pe">Cantidad Personas Desaparecidas Localizadas</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="cantidad_pe"
+    name="cantidad_pe"
+  />
+</div>
+       </div>
+        </fieldset>
+
+        <!-- DATOS DE INFRACTOR (DINÁMICO SEGÚN DETENIDOS + APREHENDIDOS) -->
+        <fieldset id="fieldset-infractores">
+          <legend>Datos de infractor</legend>
+          <div id="contenedor-infractores">
+            <!-- Se generarán dinámicamente según la suma -->
+          </div>
+        </fieldset>
+
+        <!-- VEHÍCULOS Y TRANSPORTES -->
+        <fieldset>
+          <legend>Vehículos y Medios de Transporte</legend>
+          <div class="grid">
+            <div class="form-group">
+              <label for="cantidad_de_carros">Cantidad de Vehículos</label>
+              <input
+                type="text"
+                id="cantidad_de_carros"
+                name="cantidad_de_carros"
+                class="campo-autocalculado"
+                readonly=""
+                placeholder="0"
+              />
+            </div>
+            <div class="form-group">
+              <label for="carros_apre">Carros Aprehendidos</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="carros_apre"
+                name="carros_apre"
+                class="formato-numero suma-carros"
+              />
+            </div>
+            <div class="form-group">
+              <label for="carros_recu">Carros Recuperados</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="carros_recu"
+                name="carros_recu"
+                class="formato-numero suma-carros"
+              />
+            </div>
+            <div class="form-group">
+              <label for="motos_apre">Motos Aprehendidas</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="motos_apre"
+                name="motos_apre"
+                class="formato-numero suma-carros"
+              />
+            </div>
+            <div class="form-group">
+              <label for="motos_recu">Motos Recuperadas</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="motos_recu"
+                name="motos_recu"
+                class="formato-numero suma-carros"
+              />
+            </div>
+            <div class="form-group">
+              <label for="autopartes">Cantidad Autopartes Vehículos</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="autopartes"
+                name="autopartes"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="embarcacio">Embarcaciones</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="embarcacio"
+                name="embarcacio"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="aeronaves">Aeronaves</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="aeronaves"
+                name="aeronaves"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="motores_f_b">Motores Fuera de Borda</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="motores_f_b"
+                name="motores_f_b"
+                class="formato-numero"
+              />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ARMAMENTO Y MUNICIONES -->
+        <fieldset id="fieldset-armamento">
+          <legend>Armamento y Explosivos</legend>
+          <div class="grid">
+            <div class="form-group">
+              <label for="cantidad_de_armas">Cantidad de Armas de Fuego</label>
+              <input
+                type="text"
+                id="cantidad_de_armas"
+                name="cantidad_de_armas"
+                class="campo-autocalculado"
+                readonly=""
+                placeholder="0"
+              />
+            </div>
+            <div class="form-group">
+              <label for="armas_blanc">Armas Blancas</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="armas_blanc"
+                name="armas_blanc"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="ametrallad">Ametralladoras</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="ametrallad"
+                name="ametrallad"
+                class="formato-numero suma-armas"
+              />
+            </div>
+            <div class="form-group">
+              <label for="bazuca">Bazuca</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="bazuca"
+                name="bazuca"
+                class="formato-numero suma-armas"
+              />
+            </div>
+            <div class="form-group">
+              <label for="canon">Cañón</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="canon"
+                name="canon"
+                class="formato-numero suma-armas"
+              />
+            </div>
+            <div class="form-group">
+              <label for="carabina">Carabina</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="carabina"
+                name="carabina"
+                class="formato-numero suma-armas"
+              />
+            </div>
+            <div class="form-group">
+              <label for="escuchera">Cartuchera</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="cartuchera"
+                name="cartuchera"
+                class="formato-numero suma-armas"
+              />
+            </div>
+            <div class="form-group">
+              <label for="fusipeta">Escopeta</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="escopeta"
+                name="escopeta"
+                class="formato-numero suma-armas"
+              />
+            </div>
+            <div class="form-group">
+              <label for="fusil">Fusil</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="fusil"
+                name="fusil"
+                class="formato-numero suma-armas"
+              />
+            </div>
+            <div class="form-group">
+              <label for="lanza_granadas">Lanza Granada</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="lanza_granadas"
+                name="lanza_granadas"
+                class="formato-numero suma-armas"
+              />
+            </div>
+            <div class="form-group">
+              <label for="mortero">Mortero</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="mortero"
+                name="mortero"
+                class="formato-numero suma-armas"
+              />
+            </div>
+            <div class="form-group">
+              <label for="pistola">Pistola</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="pistola"
+                name="pistola"
+                class="formato-numero suma-armas"
+              />
+            </div>
+            <div class="form-group">
+              <label for="pistolon">Pistolón</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="pistolon"
+                name="pistolon"
+                class="formato-numero suma-armas"
+              />
+            </div>
+            <div class="form-group">
+              <label for="repetidora">Repetidora</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="repetidora"
+                name="repetidora"
+                class="formato-numero suma-armas"
+              />
+            </div>
+            <div class="form-group">
+              <label for="revolver">Revólver</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="revolver"
+                name="revolver"
+                class="formato-numero suma-armas"
+              />
+            </div>
+            <div class="form-group">
+              <label for="rifle">Rifle</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="rifle"
+                name="rifle"
+                class="formato-numero suma-armas"
+              />
+            </div>
+            <div class="form-group">
+              <label for="submetral">Subametralladora</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="submetral"
+                name="submetral"
+                class="formato-numero suma-armas"
+              />
+            </div>
+            <div class="form-group">
+              <label for="otras_armas">Otras Armas de Fuego</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="otras_armas"
+                name="otras_armas"
+                class="formato-numero suma-armas"
+              />
+            </div>
+            <div class="form-group">
+              <label for="municiones">Municiones</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="municiones"
+                name="municiones"
+                class="formato-numero suma-armas"
+              />
+            </div>
+            <div class="form-group">
+              <label for="cap_detona">Cápsulas Detonantes (Und)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="cap_detona"
+                name="cap_detona"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="fulminante">Fulminantes (Und)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="fulminante"
+                name="fulminante"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="granadas">Granadas (Und)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="granadas"
+                name="granadas"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="tacos_dina">Tacos de Dinamita (Und)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="tacos_dina"
+                name="tacos_dina"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="minas_dina">Minas Detonantes (Und)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="minas_dina"
+                name="minas_dina"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="pentolita">Pentolita (Kg)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0,00"
+                id="pentolita"
+                name="pentolita"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="perdigones">Perdigones (Und)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="perdigones"
+                name="perdigones"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="pirotecnia">Pirotecnia (Und)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="pirotecnia"
+                name="pirotecnia"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="polvora">Pólvora (Kg)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0,00"
+                id="polvora"
+                name="polvora"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="mecha_lenta">Mecha Lenta Cordón Detonante (M)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0,00"
+                id="mecha_lenta"
+                name="mecha_lenta"
+                class="formato-numero"
+              />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- DROGAS Y SUSTANCIAS SUJETAS A FISCALIZACIÓN -->
+        <fieldset id="fieldset-drogas">
+          <legend>Sustancias Sujetas a Fiscalización y Químicos</legend>
+          <div class="grid">
+            <div class="form-group">
+              <label for="cantidad_de_drogas">Cantidad de Drogas (Gramos)</label>
+              <input
+                type="text"
+                id="cantidad_de_drogas"
+                name="cantidad_de_drogas"
+                class="campo-autocalculado"
+                readonly=""
+                placeholder="0,00"
+              />
+            </div>
+            <div class="form-group">
+              <label for="cocaina">Cocaína (Gramos)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0,00"
+                id="cocaina"
+                name="cocaina"
+                class="formato-numero suma-drogas"
+              />
+            </div>
+            <div class="form-group">
+              <label for="heroina">Heroína (Gramos)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0,00"
+                id="heroina"
+                name="heroina"
+                class="formato-numero suma-drogas"
+              />
+            </div>
+            <div class="form-group">
+              <label for="marihuana">Marihuana (Gramos)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0,00"
+                id="marihuana"
+                name="marihuana"
+                class="formato-numero suma-drogas"
+              />
+            </div>
+            <div class="form-group">
+              <label for="sinteticas">Drogas Sintéticas (Gramos)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0,00"
+                id="sinteticas"
+                name="sinteticas"
+                class="formato-numero suma-drogas"
+              />
+            </div>
+            <div class="form-group">
+              <label for="pasta_base">Pasta Base de Cocaína (Gramos)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0,00"
+                id="pasta_base"
+                name="pasta_base"
+                class="formato-numero suma-drogas"
+              />
+            </div>
+            <div class="form-group">
+              <label for="otras_drogas">Otras Drogas (Gramos)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0,00"
+                id="otras_drogas"
+                name="otras_drogas"
+                class="formato-numero suma-drogas"
+              />
+            </div>
+            <div class="form-group">
+              <label for="laboratorio">Laboratorios Procesamiento Droga</label>
+              <input type="text" inputmode="decimal" placeholder="0" id="laboratorio" class="formato-numero" />
+            </div>
+            <div class="form-group">
+              <label for="cloruro_de">Cloruro de Calcio (Kg)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0,00"
+                id="cloruro_de"
+                name="cloruro_de"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="nitrato_de">Nitrato de Amonio (Kg)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0,00"
+                id="nitrato_de"
+                name="nitrato_de"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="quimicos_li">Químicos Líquidos (Lt)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0,00"
+                id="quimicos_li"
+                name="quimicos_li"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="quimicos_so">Químicos Sólidos (Kg)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0,00"
+                id="quimicos_so"
+                name="quimicos_so"
+                class="formato-numero"
+              />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- COMBUSTIBLES Y CONTRABANDO -->
+        <fieldset id="fieldset-combustibles">
+          <legend>Combustibles y Bienes Incautados / Contrabando</legend>
+          <div class="grid">
+            <div class="form-group">
+              <label for="cantidad_de_combustible">Cantidad de Combustible (Galones)</label>
+              <input
+                type="text"
+                id="cantidad_de_combustible"
+                name="cantidad_de_combustible"
+                class="campo-autocalculado"
+                readonly=""
+                placeholder="0,00"
+              />
+            </div>
+            <div class="form-group">
+              <label for="diesel">Diésel (Galones)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0,00"
+                id="diesel"
+                name="diesel"
+                class="formato-numero suma-combustible"
+              />
+            </div>
+            <div class="form-group">
+              <label for="gasolina">Gasolina (Galones)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0,00"
+                id="gasolina"
+                name="gasolina"
+                class="formato-numero suma-combustible"
+              />
+            </div>
+            <div class="form-group">
+              <label for="gasolina_de">Gasolina de Pesca (Galones)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0,00"
+                id="gasolina_de"
+                name="gasolina_de"
+                class="formato-numero suma-combustible"
+              />
+            </div>
+            <div class="form-group">
+ <label for="contraband">Contrabando (Und)</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="contraband"
+    name="contraband"
+  />
+</div>
+<div class="form-group">
+ <label for="ccontraband_mon">Contrabando Monetizado ($)</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0,00"
+    id="contraband_mon"
+    name="contraband_mon"
+  />
+</div>
+                <div class="form-group">
+              <label for="botellas_de">Botellas de Licor (Und)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="botellas_de"
+                name="botellas_de"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="cigarrillos">Cigarrillos (Und)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="cigarrillos"
+                name="cigarrillos"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="electrodom">Electrodomésticos (Und)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="electrodom"
+                name="electrodom"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="pares_de_cal">Pares de Calzado (Und)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="pares_de_cal"
+                name="pares_de_cal"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="prendas_de_v">Prendas de Vestir (Und)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="prendas_de_v"
+                name="prendas_de_v"
+                class="formato-numero"
+              />
+            </div>
+<div class="form-group">
+ <label for="material_au">Material Aurífero (Kg)</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0,00"
+    id="material_au"
+    name="material_au"
+  />
+</div>
+            <div class="form-group">
+              <label for="semovientes">Semovientes (Und)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="semovientes"
+                name="semovientes"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="madera">Madera (M³)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0,00"
+                id="madera"
+                name="madera"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="glp">GLP (15 - 45 Kg) (Und)</label>
+              <input type="text" inputmode="decimal" placeholder="0" id="glp" name="glp" class="formato-numero" />
+            </div>
+            <div class="form-group">
+              <label for="maquinaria">Maquinaria Pesada (Und)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="maquinaria"
+                name="maquinaria"
+                class="formato-numero"
+              />
+            </div>
+<div class="form-group">
+ <label for="productos_a">Productos Agrícolas (Bultos)</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="productos_a"
+    name="productos_a"
+  />
+</div>
+<div class="form-group">
+ <label for="fauna_silves">Fauna Silvestre (Und)</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="fauna_silves"
+    name="fauna_silves"
+  />
+</div>
+<div class="form-group">
+ <label for="patrimonio">Patrimonio Cultural (Und)</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="patrimonio"
+    name="patrimonio"
+  />
+</div>
+          </div>
+        </fieldset>
+
+        <!-- VALORES Y DÓLARES -->
+        <fieldset>
+          <legend>Valores Económicos y Equipos de Comunicación</legend>
+          <div class="grid">
+            <div class="form-group">
+              <label for="dolares_ame">Dólares Americanos ($)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0,00"
+                id="dolares_ame"
+                name="dolares_ame"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="dolares_falso">Dólares Falsos ($)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0,00"
+                id="dolares_falso"
+                name="dolares_falso"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="cantidad_de_celulares">Cantidad de Dinero en Cuentas Bancarias ($)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0,00"
+                id="cantidad_de_dinero"
+                name="cantidad_de_dinero"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="celulares">Celulares (Und)</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="celulares"
+                name="celulares"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="bienes_inc">Cantidad de Bienes Inmuebles Incautados</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="bienes_inc"
+                name="bienes_inc"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="bienes_inc_val">Valor de los Bienes Inmuebles Incautados</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0,00"
+                id="bienes_inc_val"
+                name="bienes_inc_val"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="cantidad_de_ip">Cantidad de Investigaciones Previas Aperturadas</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="cantidad_de_ip"
+                name="cantidad_de_ip"
+                class="formato-numero"
+              />
+            </div>
+<div class="form-group">
+ <label for="varios">Varios Objetos</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="varios"
+    name="varios"
+  />
+</div>
+          </div>
+        </fieldset>
+
+        <!-- PROCEDIMIENTOS JUDICIALES Y PERICIALES -->
+        <fieldset>
+          <legend>Diligencias Judiciales y Procedimientos</legend>
+          <div class="grid">
+<div class="form-group">
+ <label for="pericias_med">Pericias Medicina Legal</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="pericias_med"
+    name="pericias_med"
+  />
+</div>
+<div class="form-group">
+ <label for="pericias_crim">Pericias Criminalística</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="pericias_crim"
+    name="pericias_crim"
+  />
+</div>
+<div class="form-group">
+ <label for="pericias_acc">Pericias Accidentología Vial</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="pericias_acc"
+    name="pericias_acc"
+  />
+</div>
+<div class="form-group">
+ <label for="disposicion">Disposición Final de Armas de Fuego</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="disposicion"
+    name="disposicion"
+  />
+</div>
+<div class="form-group">
+ <label for="disposicion_2">Disposición Final de Municiones</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="disposicion_2"
+    name="disposicion_2"
+  />
+</div>
+<div class="form-group">
+ <label for="disposicion_3">Disposición Final de Bienes Muebles e Inmuebles</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="disposicion_3"
+    name="disposicion_3"
+  />
+</div>
+<div class="form-group">
+ <label for="disposicion_4">Disposición Final de Automotores</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="disposicion_4"
+    name="disposicion_4"
+  />
+</div>
+<div class="form-group">
+ <label for="traslado_de">Traslado de Indicios Bajo Pedido de Autoridad Competente</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="traslado_de"
+    name="traslado_de"
+  />
+</div>
+<div class="form-group">
+ <label for="deposito_de">Depósito de Dinero Real</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="deposito_de"
+    name="deposito_de"
+  />
+</div>
+<div class="form-group">
+ <label for="destruccion">Destrucción de Dinero Falso</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="destruccion"
+    name="destruccion"
+  />
+</div>
+            <div class="form-group">
+              <label for="personas_pr">Personas Protegidas</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="personas_pr"
+                name="personas_pr"
+                class="formato-numero"
+              />
+            </div>
+<div class="form-group">
+ <label for="operativos_i">Operativos de Traslado</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="operativos_i"
+    name="operativos_i"
+  />
+</div>
+<div class="form-group">
+ <label for="informes_de">Informes de Análisis</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="informes_de"
+    name="informes_de"
+  />
+</div>
+<div class="form-group">
+ <label for="coordinacio">Coordinaciones Realizadas</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="coordinacio"
+    name="coordinacio"
+  />
+</div>
+<div class="form-group">
+ <label for="ordenes_jud">Órdenes Judiciales de Análisis Telefónico Cumplidas</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="ordenes_jud"
+    name="ordenes_jud"
+  />
+</div>
+<div class="form-group">
+ <label for="reportes_te">Reportes Telefónicos Entregados</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="reportes_te"
+    name="reportes_te"
+  />
+</div>
+<div class="form-group">
+ <label for="inf_relev">Informes Relevantes (SMS-AUDIOS)</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="inf_relev"
+    name="inf_relev"
+  />
+</div>
+<div class="form-group">
+ <label for="certificado">Certificados de Armas Entregado</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="certificado"
+    name="certificado"
+  />
+</div>
+<div class="form-group">
+ <label for="registro_de">Registro de Medidas Cautelares</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="registro_de"
+    name="registro_de"
+  />
+</div>
+<div class="form-group">
+ <label for="coincidenci">Coincidencias de Potenciales de Vainas</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="coincidenci"
+    name="coincidenci"
+  />
+</div>
+<div class="form-group">
+ <label for="coordin_upc">Coordinaciones con UPC</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="coordin_upc"
+    name="coordin_upc"
+  />
+</div>
+<div class="form-group">
+ <label for="auditorias_d">Auditorías de Seguridad</label>
+  <input
+    type="text"
+    inputmode="decimal"
+    placeholder="0"
+    id="auditorias_d"
+    name="auditorias_d"
+  />
+</div>
+          </div>
+        </fieldset>
+
+        <!-- INFRAESTRUCTURA ILEGAL / OTROS INDICADORES -->
+        <fieldset>
+          <legend>Infraestructura Ilegal e Indicadores Numéricos</legend>
+          <div class="grid">
+            <div class="form-group">
+              <label for="perforacion">Perforaciones</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="perforacion"
+                name="perforacion"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="destiladore">Destiladores</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="destiladore"
+                name="destiladore"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="piscinas_art">Piscinas Artesanales de CLDH</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="piscinas_art"
+                name="piscinas_art"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="no_cuentas">N°. Cuentas Bancarias</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="no_cuentas"
+                name="no_cuentas"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="no_cuentas_2">N°. de Monederos de Activos Virtuales Bloqueados</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="no_cuentas_2"
+                name="no_cuentas_2"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="valor_de_act">Valor de Activos Incautados</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0,00"
+                id="valor_de_act"
+                name="valor_de_act"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="no_notifica">N°. de Víctimas</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="no_notifica"
+                name="no_notifica"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="no_sospecho">N°. de Notifiicaciones/Difusiones Emitidas</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="no_sospecho"
+                name="no_sospecho"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="no_sospecho_ide">N°. Sospechosos Identificados</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="no_sospecho_ide"
+                name="no_sospecho_ide"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="no_casos_res">N°. Casos Resueltos</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="no_casos_res"
+                name="no_casos_res"
+                class="formato-numero"
+              />
+            </div>
+            <div class="form-group">
+              <label for="no_casos_an_2">N°. Casos Analizados</label>
+              <input
+                type="text"
+                inputmode="decimal"
+                placeholder="0"
+                id="no_casos_an_2"
+                name="no_casos_an_2"
+                class="formato-numero"
+              />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- DATOS DEL AGENTE / RESPONSABLE -->
+        <fieldset>
+          <legend>Datos del Responsable del Registro</legend>
+          <div class="grid">
+            <div class="form-group">
+  <label for="grado">Grado</label>
+  <select id="grado" name="grado">
+    <option value="" disabled selected>Seleccione un grado</option>
+    <option value="CRNL">CRNL.</option>
+    <option value="TCNL">TCNL.</option>
+    <option value="MAYR">MAYR.</option>
+    <option value="CPTN">CPTN.</option>
+    <option value="TNTE">TNTE.</option>
+    <option value="SBTE">SBTE.</option>
+    <option value="SBOP">SBOP.</option>
+    <option value="SBOS">SBOS.</option>
+    <option value="SGOP">SGOP.</option>
+    <option value="SGOS">SGOS.</option>
+    <option value="CBOP">CBOP.</option>
+    <option value="CBOS">CBOS.</option>
+    <option value="POLI">POLI.</option>
+  </select>
+</div>
+            <div class="form-group">
+              <label for="apellidos_y_agente">Apellidos y Nombres del Agente</label>
+              <input type="text" id="apellidos_y_agente" name="apellidos_y_agente" />
+            </div>
+            <div class="form-group">
+              <label for="telefono_c">Teléfono Contacto</label>
+              <input type="tel" id="telefono_c" name="telefono_c" />
+            </div>
+            <div class="form-group">
+              <label for="correo_elec">Correo Electrónico</label>
+              <input type="email" id="correo_elec" name="correo_elec" />
+            </div>
+            <div class="form-group">
+              <label for="id_operativo">Ingrese el ID del Operativo</label>
+              <input type="text" id="id_operativo" name="id_operativo" />
+            </div>
+         </div>
+        </fieldset>
+
+        <button type="submit" class="btn-submit">Guardar Registro</button>
+      </form>
+    </div>
+
+
+
+
+
+
+
+
+
+<script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Formateador general de números
+        const inputsFormatoNumero = document.querySelectorAll(".formato-numero");
+
+        // Elementos para cálculo de Carros / Vehículos
+        const inputsSumaCarros = document.querySelectorAll(".suma-carros");
+        const inputTotalCarros = document.getElementById("cantidad_de_carros");
+
+        // Elementos para cálculo de Armas
+        const inputsSumaArmas = document.querySelectorAll("#fieldset-armamento .suma-armas");
+        const inputTotalArmas = document.getElementById("cantidad_de_armas");
+
+        // Elementos para cálculo de Drogas
+        const inputsSumaDrogas = document.querySelectorAll("#fieldset-drogas .suma-drogas");
+        const inputTotalDrogas = document.getElementById("cantidad_de_drogas");
+
+        // Elementos para cálculo de Combustibles
+        const inputsSumaCombustible = document.querySelectorAll("#fieldset-combustibles .suma-combustible");
+        const inputTotalCombustible = document.getElementById("cantidad_de_combustible");
+
+        // Convertir texto formateado (1.234,56) a número Flotante (1234.56)
+        function parsearFormatoLatino(val) {
+          if (!val) return 0;
+          let numLimpio = val.replace(/\./g, "").replace(",", ".");
+          let num = parseFloat(numLimpio);
+          return isNaN(num) ? 0 : num;
+        }
+
+        // Formatear número flotante a formato latino con punto en miles y coma en decimales
+        function formatearLatino(num, esEntero = false) {
+          if (num === 0) return esEntero ? "0" : "0,00";
+          if (esEntero) {
+            return Math.round(num).toLocaleString("de-DE");
+          }
+          let partes = num.toFixed(2).split(".");
+          let entero = parseInt(partes[0], 10).toLocaleString("de-DE");
+          let decimal = partes[1];
+          return `${entero},${decimal}`;
+        }
+
+        // Lógica de Suma de Carros (Enteros)
+        function calcularSumaCarros() {
+          let total = 0;
+          inputsSumaCarros.forEach((input) => {
+            total += parsearFormatoLatino(input.value);
+          });
+          inputTotalCarros.value = formatearLatino(total, true);
+        }
+
+        // Lógica de Suma de Armas (Enteros)
+        function calcularSumaArmas() {
+          let total = 0;
+          inputsSumaArmas.forEach((input) => {
+            total += parsearFormatoLatino(input.value);
+          });
+          inputTotalArmas.value = formatearLatino(total, true);
+        }
+
+        // Lógica de Suma de Drogas
+        function calcularSumaDrogas() {
+          let total = 0;
+          inputsSumaDrogas.forEach((input) => {
+            total += parsearFormatoLatino(input.value);
+          });
+          inputTotalDrogas.value = formatearLatino(total);
+        }
+
+        // Lógica de Suma de Combustibles
+        function calcularSumaCombustible() {
+          let total = 0;
+          inputsSumaCombustible.forEach((input) => {
+            total += parsearFormatoLatino(input.value);
+          });
+          inputTotalCombustible.value = formatearLatino(total);
+        }
+
+        // Cargar las secuencias guardadas o inicializarlas en 0
+        let secuencias = {
+            "GRAN FÉNIX": 0,
+            "FÉNIX": 0,
+            "INTERVENCIÓN GDO": 0,
+            "BLINDAJE": 0,
+            "CERO IMPUNIDAD": 0
+        };
+
+        let tipoOperacionActual = "CERO IMPUNIDAD";
+
+        // Función para consultar las secuencias reales desde la base de datos (Backend Node.js)
+        async function cargarSecuenciasDesdeBD() {
+            try {
+                const response = await fetch("http://localhost:3000/api/secuencias");
+                const resultado = await response.json();
+                
+                if (resultado.success) {
+                    secuencias = resultado.data;
+                    evaluarPonderacionOperacion();
+                }
+            } catch (error) {
+                console.error("Error al consultar la base de datos para secuencias:", error);
+            }
+        }
+
+        // Función de evaluación y ponderación del nombre de la operación con formato estricto TIPO - 0001
+        function evaluarPonderacionOperacion() {
+          const inputNombreOperacion = document.getElementById("nombre_operacion");
+          if (!inputNombreOperacion) return;
+
+          const totalDetenidos = parseInt(document.getElementById("cantidad_detenidos").value) || 0;
+          const totalAprehendidos = parseInt(document.getElementById("cantidad_aprehendidos").value) || 0;
+          const totalArmas = parsearFormatoLatino(inputTotalArmas.value);
+          const totalDrogas = parsearFormatoLatino(inputTotalDrogas.value);
+
+          // Reglas de ponderación automáticas
+          if (totalArmas > 5 || totalDrogas > 5000) {
+            tipoOperacionActual = "GRAN FÉNIX";
+          } else if (totalDetenidos + totalAprehendidos >= 3) {
+            tipoOperacionActual = "INTERVENCIÓN GDO";
+          } else {
+            tipoOperacionActual = "CERO IMPUNIDAD";
+          }
+
+          const secuenciaActual = (secuencias[tipoOperacionActual] || 0) + 1;
+          // Formato obligatorio de 4 dígitos con ceros a la izquierda (ej. CERO IMPUNIDAD - 0052)
+          const numeroFormateado = String(secuenciaActual).padStart(4, '0');
+          inputNombreOperacion.value = `${tipoOperacionActual} - ${numeroFormateado}`;
+        }
+
+        // Exponer la función globalmente por si se requiere externamente
+        window.evaluarPonderacionOperacion = evaluarPonderacionOperacion;
+
+        // Event listener general para campos numéricos
+        inputsFormatoNumero.forEach((input) => {
+          input.addEventListener("input", function () {
+            let valor = this.value;
+
+            // Reemplazar puntos ingresados por coma
+            valor = valor.replace(/\./g, ",");
+
+            // Permitir solo dígitos y una sola coma
+            let partes = valor.split(",");
+            let entero = partes[0].replace(/[^0-9]/g, "");
+            let decimal =
+              partes.length > 1
+                ? partes
+                    .slice(1)
+                    .join("")
+                    .replace(/[^0-9]/g, "")
+                : null;
+
+            if (entero.length > 0) {
+              entero = parseInt(entero, 10).toLocaleString("de-DE");
+            }
+
+            if (decimal !== null) {
+              this.value = entero + "," + decimal;
+            } else {
+              this.value = entero;
+            }
+
+            // Disparar recálculos según la clase
+            if (this.classList.contains("suma-carros")) {
+              calcularSumaCarros();
+            }
+            if (this.classList.contains("suma-armas")) {
+              calcularSumaArmas();
+            }
+            if (this.classList.contains("suma-drogas")) {
+              calcularSumaDrogas();
+            }
+            if (this.classList.contains("suma-combustible")) {
+              calcularSumaCombustible();
+            }
+            
+            evaluarPonderacionOperacion();
+          });
+        });
+
+        // Generación dinámica de la sección "Datos de infractor"
+        const inputDetenidos = document.getElementById("cantidad_detenidos");
+        const inputAprehendidos = document.getElementById("cantidad_aprehendidos");
+        const contenedorInfractores = document.getElementById("contenedor-infractores");
+        const fieldsetInfractores = document.getElementById("fieldset-infractores");
+
+        function actualizarInfractores() {
+          const det = parseInt(inputDetenidos.value) || 0;
+          const apr = parseInt(inputAprehendidos.value) || 0;
+          const totalInfractores = det + apr;
+
+          contenedorInfractores.innerHTML = "";
+
+          if (totalInfractores <= 0) {
+            fieldsetInfractores.style.display = "none";
+          } else {
+            fieldsetInfractores.style.display = "block";
+          }
+
+          for (let i = 1; i <= totalInfractores; i++) {
+            const card = document.createElement("div");
+            card.className = "infractor-card";
+
+            card.innerHTML = `
+                    <h4>Infractor N°. ${i}</h4>
+                    <div class="grid">
+                        <div class="form-group">
+                            <label for="apellidos_y_nombres_${i}">Apellidos y Nombres del Infractor</label>
+                            <input type="text" id="apellidos_y_nombres_${i}" name="infractores[${i}][apellidos_y_nombres]">
+                        </div>
+                        <div class="form-group">
+                            <label for="cedula_pasa_${i}">Cédula/Pasaporte del Infractor</label>
+                            <input type="text" id="cedula_pasa_${i}" name="infractores[${i}][cedula_pasa]">
+                        </div>
+                        <div class="form-group">
+                            <label for="edad_del_det_${i}">Edad del Infractor</label>
+                            <input type="number" id="edad_del_det_${i}" name="infractores[${i}][edad_del_det]" min="0">
+                        </div>
+                        <div class="form-group">
+    <label for="nacionalida_${i}">Nacionalidad del Infractor</label>
+    <select id="nacionalida_${i}" name="infractores[${i}][nacionalida]">
+        <option value="" disabled selected>Seleccione una nacionalidad</option>
+        <option value="AFRICANA">AFRICANA</option>
+        <option value="ALBANESA">ALBANESA</option>
+        <option value="ALEMANA">ALEMANA</option>
+        <option value="ANGOLENA">ANGOLENA</option>
+        <option value="ARGELINA">ARGELINA</option>
+        <option value="ARGENTINA">ARGENTINA</option>
+        <option value="ARMENIA">ARMENIA</option>
+        <option value="ASIATICA">ASIATICA</option>
+        <option value="AUSTRALIANA">AUSTRALIANA</option>
+        <option value="AUTRALIANA">AUTRALIANA</option>
+        <option value="AZERBAIJAN">AZERBAIJAN</option>
+        <option value="BANGLADESI">BANGLADESI</option>
+        <option value="BELGA">BELGA</option>
+        <option value="BELICENO">BELICENO</option>
+        <option value="BENINES">BENINES</option>
+        <option value="BIELORUSO">BIELORUSO</option>
+        <option value="BISAUGINEANA">BISAUGINEANA</option>
+        <option value="BOLIVIANA">BOLIVIANA</option>
+        <option value="BRASILENA">BRASILENA</option>
+        <option value="BRITANICA">BRITANICA</option>
+        <option value="BULGARA">BULGARA</option>
+        <option value="BUTANESA">BUTANESA</option>
+        <option value="CABOVERDIANA">CABOVERDIANA</option>
+        <option value="CAMBOYANA">CAMBOYANA</option>
+        <option value="CAMERUNES">CAMERUNES</option>
+        <option value="CANADIENSE">CANADIENSE</option>
+        <option value="CEILANA">CEILANA</option>
+        <option value="CEILANDESA">CEILANDESA</option>
+        <option value="CHADIANA">CHADIANA</option>
+        <option value="CHECA">CHECA</option>
+        <option value="CHILENA">CHILENA</option>
+        <option value="CHINA">CHINA</option>
+        <option value="CHIPRIOTA">CHIPRIOTA</option>
+        <option value="COLOMBIANA">COLOMBIANA</option>
+        <option value="COMORENSE">COMORENSE</option>
+        <option value="CONGOLESA">CONGOLESA</option>
+        <option value="COREANA">COREANA</option>
+        <option value="COSTARRICENSE">COSTARRICENSE</option>
+        <option value="CROATA">CROATA</option>
+        <option value="CUBANA">CUBANA</option>
+        <option value="DANESA">DANESA</option>
+        <option value="DOMINICA">DOMINICA</option>
+        <option value="DOMINICANA">DOMINICANA</option>
+        <option value="ECUATOGUINEA">ECUATOGUINEA</option>
+        <option value="ECUATORIANA">ECUATORIANA</option>
+        <option value="EGIPCIO">EGIPCIO</option>
+        <option value="ESPANOLA">ESPANOLA</option>
+        <option value="ESTADOUNIDENS">ESTADOUNIDENS</option>
+        <option value="ESTONIA">ESTONIA</option>
+        <option value="ESTONIANA">ESTONIANA</option>
+        <option value="ETIOPE">ETIOPE</option>
+        <option value="FILIPINA">FILIPINA</option>
+        <option value="FRANCESA">FRANCESA</option>
+        <option value="GAMBIA">GAMBIA</option>
+        <option value="GEORGIANA">GEORGIANA</option>
+        <option value="GHANESA">GHANESA</option>
+        <option value="GRIEGA">GRIEGA</option>
+        <option value="GUANANO">GUANANO</option>
+        <option value="GUATEMALTECA">GUATEMALTECA</option>
+        <option value="GUINEANA">GUINEANA</option>
+        <option value="HAITIANA">HAITIANA</option>
+        <option value="HINDU">HINDU</option>
+        <option value="HOLANDESA">HOLANDESA</option>
+        <option value="HONDURENA">HONDURENA</option>
+        <option value="HONGKONES">HONGKONES</option>
+        <option value="HUNGARA">HUNGARA</option>
+        <option value="INDONESA">INDONESA</option>
+        <option value="INDU">INDU</option>
+        <option value="INGLESA">INGLESA</option>
+        <option value="IRANI">IRANI</option>
+        <option value="IRLANDESA">IRLANDESA</option>
+        <option value="ISRAELITA">ISRAELITA</option>
+        <option value="ITALIANA">ITALIANA</option>
+        <option value="JAPONESA">JAPONESA</option>
+        <option value="JORDANA">JORDANA</option>
+        <option value="KIRGUINESA">KIRGUINESA</option>
+        <option value="LETONIANA">LETONIANA</option>
+        <option value="LIBANESA">LIBANESA</option>
+        <option value="LIBIA">LIBIA</option>
+        <option value="LITUANA">LITUANA</option>
+        <option value="MACEDONIA">MACEDONIA</option>
+        <option value="MALASIA">MALASIA</option>
+        <option value="MALAWI">MALAWI</option>
+        <option value="MALI">MALI</option>
+        <option value="MALTA">MALTA</option>
+        <option value="MARFILENA">MARFILENA</option>
+        <option value="MARROQUI">MARROQUI</option>
+        <option value="MEXICANA">MEXICANA</option>
+        <option value="MOLDAVA">MOLDAVA</option>
+        <option value="MONACO">MONACO</option>
+        <option value="NEOZELANDESA">NEOZELANDESA</option>
+        <option value="NICARAGUENSE">NICARAGUENSE</option>
+        <option value="NIGERIANA">NIGERIANA</option>
+        <option value="NORTEAMERICAN">NORTEAMERICAN</option>
+        <option value="NORUEGA">NORUEGA</option>
+        <option value="NUEVAGUINEAN">NUEVAGUINEAN</option>
+        <option value="PAKISTANI">PAKISTANI</option>
+        <option value="PALESTINA">PALESTINA</option>
+        <option value="PANAMENA">PANAMENA</option>
+        <option value="PAPUANA">PAPUANA</option>
+        <option value="PARAGUAYA">PARAGUAYA</option>
+        <option value="PERUANA">PERUANA</option>
+        <option value="POLACA">POLACA</option>
+        <option value="PORTUGUESA">PORTUGUESA</option>
+        <option value="PUERTORRIQUEN">PUERTORRIQUEN</option>
+        <option value="REINO UNIDO">REINO UNIDO</option>
+        <option value="RUMANA">RUMANA</option>
+        <option value="RUSA">RUSA</option>
+        <option value="SAHARAUI">SAHARAUI</option>
+        <option value="SALOMONENSE">SALOMONENSE</option>
+        <option value="SALVADORENA">SALVADORENA</option>
+        <option value="SAUDI">SAUDI</option>
+        <option value="SE DESCONOCE">SE DESCONOCE</option>
+        <option value="SENEGALES">SENEGALES</option>
+        <option value="SERBIA">SERBIA</option>
+        <option value="SERBIO">SERBIO</option>
+        <option value="SIERRALEONESA">SIERRALEONESA</option>
+        <option value="SINGAPURENSE">SINGAPURENSE</option>
+        <option value="SIRIA">SIRIA</option>
+        <option value="SOMALI">SOMALI</option>
+        <option value="SUDAFRICANA">SUDAFRICANA</option>
+        <option value="SUECA">SUECA</option>
+        <option value="SUIZA">SUIZA</option>
+        <option value="SURCOREANA">SURCOREANA</option>
+        <option value="TAILANDESA">TAILANDESA</option>
+        <option value="TAIWANESA">TAIWANESA</option>
+        <option value="TAYIKA">TAYIKA</option>
+        <option value="TOGOLES">TOGOLES</option>
+        <option value="TURCA">TURCA</option>
+        <option value="UCRANIANA">UCRANIANA</option>
+        <option value="UGANDA">UGANDA</option>
+        <option value="UGANDESA">UGANDESA</option>
+        <option value="URUGUAYA">URUGUAYA</option>
+        <option value="UZBECO">UZBECO</option>
+        <option value="VANUATUENSE">VANUATUENSE</option>
+        <option value="VATICANA">VATICANA</option>
+        <option value="VENEZOLANA">VENEZOLANA</option>
+        <option value="VIETNAMITA">VIETNAMITA</option>
+        <option value="YEMENI">YEMENI</option>
+    </select>
+</div>
+                        <div class="form-group">
+                            <label for="cant_detenciones_${i}">Cantidad de Detenciones del Infractor</label>
+                            <input type="text" id="cant_detenciones_${i}" name="infractores[${i}][cant_detenciones]">
+                        </div>
+                        <div class="form-group">
+    <label for="resolucion_${i}">Resolución de la Flagrancia del Infractor</label>
+    <select id="resolucion_${i}" name="infractores[${i}][resolucion]">
+        <option value="" disabled selected>Seleccione una resolución</option>
+        <option value="AISLAMIENTO">AISLAMIENTO</option>
+        <option value="ARRESTO DOMICILIARIO">ARRESTO DOMICILIARIO</option>
+        <option value="CONCILIACION">CONCILIACION</option>
+        <option value="EXPULSION DEL PAIS">EXPULSION DEL PAIS</option>
+        <option value="LIBRE CON INFORME">LIBRE CON INFORME</option>
+        <option value="LIBRE CON INSTRUCCION">LIBRE CON INSTRUCCION</option>
+        <option value="LIBRE NO DELITO">LIBRE NO DELITO</option>
+        <option value="MEDIDA SUSTITUTIVA">MEDIDA SUSTITUTIVA</option>
+        <option value="PRISION PREVENTIVA">PRISION PREVENTIVA</option>
+        <option value="PROCEDIMIENTO ORDINARIO">PROCEDIMIENTO ORDINARIO</option>
+        <option value="SE DESCONOCE">SE DESCONOCE</option>
+    </select>
+</div>
+<div class="form-group">
+    <label for="grupo_delic_${i}">Grupo Delictivo al que Pertenece el Infractor</label>
+    <select id="grupo_delic_${i}" name="infractores[${i}][grupo_delic]">
+        <option value="" disabled selected>Seleccione un grupo delictivo</option>
+        <option value="AGUILAS">AGUILAS</option>
+        <option value="CHONE KILLERS">CHONE KILLERS</option>
+        <option value="CHONEROS">CHONEROS</option>
+        <option value="FATALES">FATALES</option>
+        <option value="GANGSTERS">GANGSTERS</option>
+        <option value="LAGARTOS">LAGARTOS</option>
+        <option value="LATIN KINGS">LATIN KINGS</option>
+        <option value="LOBOS">LOBOS</option>
+        <option value="M18 TIBURONES">M18 TIBURONES</option>
+        <option value="R">R</option>
+        <option value="TIGUERONES">TIGUERONES</option>
+        <option value="SE DESCONOCE">SE DESCONOCE</option>
+    </select>
+</div>  
+                        <div class="form-group">
+    <label for="el_detenido_${i}">El Infractor es Servidor Policial?</label>
+    <select id="el_detenido_${i}" name="infractores[${i}][el_detenido]">
+        <option value="" disabled selected>Seleccione...</option>
+        <option value="SI">SI</option>
+        <option value="NO">NO</option>
+    </select>
+</div>
+
+                    </div>
+                `;
+            contenedorInfractores.appendChild(card);
+          }
+          evaluarPonderacionOperacion();
+        }
+
+        inputDetenidos.addEventListener("input", actualizarInfractores);
+        inputAprehendidos.addEventListener("input", actualizarInfractores);
+        actualizarInfractores();
+
+        // Marca Temporal por defecto
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, "0");
+        const day = String(now.getDate()).padStart(2, "0");
+        const hours = String(now.getHours()).padStart(2, "0");
+        const minutes = String(now.getMinutes()).padStart(2, "0");
+        document.getElementById("marca_temporal").value = `${year}-${month}-${day}T${hours}:${minutes}`;
+
+        // Llamar a la carga de secuencias al iniciar la página
+        cargarSecuenciasDesdeBD();
+
+        // Diccionarios de Direcciones, Unidades, Subzonas, Distritos y Circuitos...
+        const unidadesPorDireccion = {
+          UNIDADES_TRANSVERSALES: ["ULCO", "UDT", "UIAD", "UNDP", "CIBERPOL", "UNPROV", "UNTIAT", "INTERPOL", "AMERIPOL", "UNRED", "REGPOL", "UNAI"],
+          DNPJ: ["UNIDAE", "UIDH", "BAC", "UNIF", "UICA", "UNIDCAM", "UNIC"],
+          DNA: ["UIACE", "UIAN", "UIPA", "UCTCI", "UNSQ"],
+          DINASED: ["UIPD", "UMV", "UNASE"],
+          DINAF: ["DINAPEN", "DEVIF", "UNAT", "UNCIS"],
+          DINIC: ["UNDECOF", "UDAR", "UCAP"],
+          DINITEC: ["CRIMINALISTICA", "MEDICINA LEGAL", "UNIVIAL"],
+          DINASI: ["DINASI"],
+        };
+
+        const selectDireccion = document.getElementById("elija_direccion");
+        const selectUnidad = document.getElementById("elija_unidad");
+        const inputIdOperativo = document.getElementById("id_operativo");
+
+        if (inputIdOperativo) {
+          inputIdOperativo.disabled = true;
+          inputIdOperativo.required = false;
+        }
+
+        selectDireccion.addEventListener("change", function () {
+          const direccionSeleccionada = this.value;
+          const unidades = unidadesPorDireccion[direccionSeleccionada] || [];
+
+          selectUnidad.innerHTML = '<option value="" disabled selected>Seleccione una Unidad...</option>';
+
+          if (unidades.length > 0) {
+            unidades.forEach(function (unidad) {
+              const option = document.createElement("option");
+              option.value = unidad;
+              option.textContent = unidad;
+              selectUnidad.appendChild(option);
+            });
+            selectUnidad.disabled = false;
+          } else {
+            selectUnidad.disabled = true;
+          }
+
+          if (inputIdOperativo) {
+            if (direccionSeleccionada === "DNA") {
+              inputIdOperativo.disabled = false;
+              inputIdOperativo.required = true;
+            } else {
+              inputIdOperativo.disabled = true;
+              inputIdOperativo.required = false;
+              inputIdOperativo.value = "";
+            }
+          }
+        });
+
+        const datosDistritos = {
+          AZUAY: ["CUENCA NORTE", "CUENCA SUR", "GIRÓN", "GUALACEO", "NABÓN", "PAUTE", "PONCE ENRÍQUEZ", "SÍGSIG"],
+          BOLÍVAR: ["CHILLANES", "GUARANDA", "SAN MIGUEL", "SUBTRÓPICO"],
+          CAÑAR: ["AZOGUES", "CAÑAR", "LA TRONCAL"],
+          CARCHI: ["ESPEJO", "MONTÚFAR", "TULCÁN"],
+          CHIMBORAZO: ["ALAUSÍ", "COLTA", "GUANO", "PALLATANGA", "RIOBAMBA"],
+          COTOPAXI: ["DANSANTE", "LA MANÁ", "LATACUNGA", "PANGUA", "SALCEDO", "SIGCHOS"],
+          DMG: ["9 DE OCTUBRE", "CEIBOS", "DURÁN", "ESTEROS", "FLORIDA", "MODELO", "NUEVA PROSPERINA", "PASCUALES", "PORTETE", "PROGRESO", "SAMBORONDÓN", "SUR - DMG"],
+          DMQ: ["CALDERÓN", "ELOY ALFARO - DMQ", "EUGENIO ESPEJO", "LA DELICIA", "LOS CHILLOS", "MANUELA SÁENZ", "NANEGAL", "QUITUMBE", "TUMBACO"],
+          "EL ORO": ["HUAQUILLAS", "MACHALA", "PASAJE", "PIÑAS", "SANTA ROSA", "ZARUMA"],
+          ESMERALDAS: ["ATACAMES", "ELOY ALFARO - ESM", "ESMERALDAS", "QUININDÉ", "RÍO VERDE", "SAN LORENZO"],
+          GALÁPAGOS: ["GALÁPAGOS"],
+          GUAYAS: ["BALZAR", "DAULE", "EL TRIUNFO BUCAY", "EMPALME", "JUJAN SIMÓN BOLÍVAR", "MILAGRO", "NARANJAL BALAO", "NARANJITO MARCELINO MARIDUEÑA", "PEDRO CARBO", "PLAYAS", "SALITRE", "YAGUACHI"],
+          IMBABURA: ["CIUDAD BLANCA", "TIERRA DEL SOL", "VALLE DEL AMANECER"],
+          LOJA: ["CALVAS", "CATACOCHA", "CATAMAYO", "ESPÍNDOLA", "LOJA", "MACARÁ", "SABANILLA", "SARAGURO", "ZAPOTILLO"],
+          "LOS RÍOS": ["BABAHOYO", "BUENA FE", "PUEBLOVIEJO", "QUEVEDO", "VENTANAS", "VINCES"],
+          MANABÍ: ["24 DE MAYO", "BOLÍVAR JUNÍN", "CHONE", "EL CARMEN", "JIPIJAPA", "MANTA", "PAJÁN", "PEDERNALES", "PICHINCHA", "PORTOVIEJO", "ROCAFUERTE", "SUCRE"],
+          "MORONA SANTIAGO": ["CENTRO SUR", "MÉNDEZ", "MORONA", "SANGAY", "SUR - MORONA", "TAISHA"],
+          NAPO: ["EL VALLE DE QUIJOS", "TENA"],
+          ORELLANA: ["AGUARICO", "LA JOYA DE LOS SACHAS", "ORELLANA LORETO"],
+          PASTAZA: ["ARAJUNO", "PASTAZA"],
+          PICHINCHA: ["CAYAMBE", "NOROCCIDENTE", "RUMIÑAHOI - MEJÍA"],
+          "SANTA ELENA": ["LIBERTAD SALINAS", "SANTA ELENA"],
+          "STO DGO DE LOS TSÁCHILAS": ["LA CONCORDIA", "SANTO DOMINGO ESTE", "SANTO DOMINGO OESTE"],
+          SUCUMBÍOS: ["LAGO AGRIO", "PUTUMAYO", "SHUSHUFINDI", "SUCUMBÍOS"],
+          TUNGURAHUA: ["AMBATO NORTE", "AMBATO SUR", "BAÑOS", "PATATE", "PÍLLARO", "QUERO"],
+          "ZAMORA CHINCHIPE": ["CHINCHIPE", "PAQUISHA", "YANTZAZA", "ZAMORA"]
+        };
+
+        const datosCircuitosPorDistrito = {
+          "AZUAY": [
+            "CUENCA NORTE", "CUENCA SUR", "GIRÓN", "GUALACEO", "NABÓN", "PAUTE", "PONCE ENRÍQUEZ", "SÍGSIG",
+            "BARRIAL BLANCO", "BELLAVISTA", "CAÑARIBAMBA", "CHECA", "EL SAGRARIO", "EL VECINO", "GIL RAMÍREZ DÁVALOS", 
+            "HERMANO MIGUEL", "MACHÁNGARA", "OCTAVIO CORDERO", "PACCHA Y NULTI", "QUINTA CHICA", "RICAURTE", 
+            "SAN BLAS", "SAN JOAQUÍN", "SAYAUSI", "SININCAY", "TERMINAL TERRESTRE", "TOTORACOCHA", "VERDE LOMA",
+            "BAÑOS", "CAYAMBE", "CHAUCHA", "COCHAPAMBA", "CUMBE", "EL BATAN", "EL SALADO", "EL VALLE", 
+            "HUAYNA CAPAC", "MOLLETURO", "MONAY", "NARANJAY", "QUINGEO", "SAN SEBASTIÁN", "SANTA ANA", 
+            "SUCRE", "TARQUI", "TURI", "YANUNCAY", "CERRO NEGRO", "LA UNIÓN", "PUCARÁ", "SAN FERNANDO", 
+            "SAN RAFAEL SHARUG", "CHORDELEG", "GUALACEO SUR", "JADAN", "REMIGIO CRESPO", "SAN JUAN", "ZHIMAD", 
+            "LAS NIEVES", "OÑA", "AMALUZA", "DUG DUG", "EL PAN", "GUACHAPALA", "SEVILLA DE ORO", 
+            "CAMILO PONCE ENRÍQUEZ", "CARMEN DE PIJILI", "SHUMIRAL", "JIMA", "LUDO"
+          ],
+          "BOLÍVAR": [
+            "CHILLANES", "GUARANDA", "SAN MIGUEL", "SUBTRÓPICO", "SAN JOSÉ DEL TAMBO", 
+            "1 DE MAYO", "15 DE MAYO", "FACUNDO VELA", "GUANUJO", "GUARANDA SUR", "PALMA LOMA", 
+            "QUINDIGUA BAJO", "SALINAS", "SAN LORENZO", "SAN LUIS", "SIMIATUG", 
+            "BALSAPAMBA", "CHIMBO", "MAGDALENA", "SAN PABLO", "SANTIAGO", "TELIMBELA"
+          ],
+          "CAÑAR": [
+            "AZOGUES", "CAÑAR", "LA TRONCAL", "AZOGUES NORTE", "AZOGUES OESTE", "AZOGUES ORIENTE", 
+            "AZOGUES SUR", "BIBLIÁN", "DÉLEG", "GUAPAN", "JERUSALÉN", "LUIS CORDERO", "NAZON", 
+            "SAN MIGUEL", "UCHUPUCUM", "CAÑAR OCCIDENTE", "EL TAMBO", "GUALLETURO", "INGAPIRCA", 
+            "SUSCAL", "ZHUD", "EL PIEDRERO", "TRONCAL CENTRO", "TRONCAL OESTE"
+          ],
+          "CARCHI": ["ESPEJO", "MONTÚFAR", "TULCÁN"],
+          "CHIMBORAZO": ["ALAUSÍ", "COLTA", "GUANO", "PALLATANGA", "RIOBAMBA"],
+          "COTOPAXI": ["DANSANTE", "LA MANÁ", "LATACUNGA", "PANGUA", "SALCEDO", "SIGCHOS"],
+          "DMG": ["9 DE OCTUBRE", "CEIBOS", "DURÁN", "ESTEROS", "FLORIDA", "MODELO", "NUEVA PROSPERINA", "PASCUALES", "PORTETE", "PROGRESO", "SAMBORONDÓN", "SUR - DMG"],
+          "DMQ": ["CALDERÓN", "ELOY ALFARO - DMQ", "EUGENIO ESPEJO", "LA DELICIA", "LOS CHILLOS", "MANUELA SÁENZ", "NANEGAL", "QUITUMBE", "TUMBACO"],
+          "EL ORO": ["HUAQUILLAS", "MACHALA", "PASAJE", "PIÑAS", "SANTA ROSA", "ZARUMA"],
+          "ESMERALDAS": ["ATACAMES", "ELOY ALFARO - ESM", "ESMERALDAS", "QUININDÉ", "RÍO VERDE", "SAN LORENZO"],
+          "GALÁPAGOS": ["GALÁPAGOS"],
+          "GUAYAS": ["BALZAR", "DAULE", "EL TRIUNFO BUCAY", "EMPALME", "JUJAN SIMÓN BOLÍVAR", "MILAGRO", "NARANJAL BALAO", "NARANJITO MARCELINO MARIDUEÑA", "PEDRO CARBO", "PLAYAS", "SALITRE", "YAGUACHI"],
+          "IMBABURA": ["CIUDAD BLANCA", "TIERRA DEL SOL", "VALLE DEL AMANECER"],
+          "LOJA": ["CALVAS", "CATACOCHA", "CATAMAYO", "ESPÍNDOLA", "LOJA", "MACARÁ", "SABANILLA", "SARAGURO", "ZAPOTILLO"],
+          "LOS RÍOS": ["BABAHOYO", "BUENA FE", "PUEBLOVIEJO", "QUEVEDO", "VENTANAS", "VINCES"],
+          "MANABÍ": ["24 DE MAYO", "BOLÍVAR JUNÍN", "CHONE", "EL CARMEN", "JIPIJAPA", "MANTA", "PAJÁN", "PEDERNALES", "PICHINCHA", "PORTOVIEJO", "ROCAFUERTE", "SUCRE"],
+          "MORONA SANTIAGO": ["CENTRO SUR", "MÉNDEZ", "MORONA", "SANGAY", "SUR - MORONA", "TAISHA"],
+          "NAPO": ["EL VALLE DE QUIJOS", "TENA"],
+          "ORELLANA": ["AGUARICO", "LA JOYA DE LOS SACHAS", "ORELLANA LORETO"],
+          "PASTAZA": ["ARAJUNO", "PASTAZA"],
+          "PICHINCHA": ["CAYAMBE", "NOROCCIDENTE", "RUMIÑAHOI - MEJÍA"],
+          "SANTA ELENA": ["LIBERTAD SALINAS", "SANTA ELENA"],
+          "STO DGO DE LOS TSÁCHILAS": ["LA CONCORDIA", "SANTO DOMINGO ESTE", "SANTO DOMINGO OESTE"],
+          "SUCUMBÍOS": ["LAGO AGRIO", "PUTUMAYO", "SHUSHUFINDI", "SUCUMBÍOS"],
+          "TUNGURAHUA": ["AMBATO NORTE", "AMBATO SUR", "BAÑOS", "PATATE", "PÍLLARO", "QUERO"],
+          "ZAMORA CHINCHIPE": ["CHINCHIPE", "PAQUISHA", "YANTZAZA", "ZAMORA"]
+        };
+
+        const selectSubzona = document.getElementById("subzonaSelect");
+        const selectDistrito = document.getElementById("distritoSelect");
+        const selectCircuito = document.getElementById("circuitoSelect");
+
+        selectSubzona.addEventListener("change", function () {
+          const subzona = this.value;
+          selectDistrito.innerHTML = '<option value="" disabled selected>Seleccione Distrito...</option>';
+          selectCircuito.innerHTML = '<option value="" disabled selected>Primero seleccione Distrito...</option>';
+          selectCircuito.disabled = true;
+
+          if (datosDistritos[subzona]) {
+            datosDistritos[subzona].forEach((distrito) => {
+              const option = document.createElement("option");
+              option.value = distrito;
+              option.textContent = distrito;
+              selectDistrito.appendChild(option);
+            });
+            selectDistrito.disabled = false;
+          } else {
+            selectDistrito.disabled = true;
+          }
+        });
+
+        selectDistrito.addEventListener("change", function () {
+          const distrito = this.value;
+          selectCircuito.innerHTML = '<option value="" disabled selected>Seleccione Circuito...</option>';
+          selectCircuito.disabled = true;
+
+          const circuitosDisponibles = datosCircuitosPorDistrito[distrito] || datosCircuitosPorDistrito[selectSubzona.value] || [];
+
+          if (circuitosDisponibles.length > 0) {
+            circuitosDisponibles.forEach((circuito) => {
+              const option = document.createElement("option");
+              option.value = circuito;
+              option.textContent = circuito;
+              selectCircuito.appendChild(option);
+            });
+            selectCircuito.disabled = false;
+          } else {
+            selectCircuito.disabled = true;
+            selectCircuito.innerHTML = '<option value="" disabled selected>No hay circuitos disponibles</option>';
+          }
+        });
+
+        const latInput = document.getElementById("latitud");
+        const lngInput = document.getElementById("longitud");
+
+        [latInput, lngInput].forEach(input => {
+            input.addEventListener("input", function() {
+                let val = this.value.replace(/\./g, ',');
+                val = val.replace(/[^0-9,-]/g, '');
+                
+                const partes = val.split(',');
+                if (partes.length > 2) {
+                    val = partes[0] + ',' + partes.slice(1).join('');
+                }
+                
+                this.value = val;
+            });
+        });
+
+        const formOperativo = document.querySelector("form");
+        formOperativo.addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          evaluarPonderacionOperacion();
+
+          const formData = new FormData(formOperativo);
+          const datosJson = {};
+
+          formData.forEach((value, key) => {
+            if (datosJson[key]) {
+              if (!Array.isArray(datosJson[key])) {
+                datosJson[key] = [datosJson[key]];
+              }
+              datosJson[key].push(value);
+            } else {
+              datosJson[key] = value;
+            }
+          });
+
+          const nombreOpVal = document.getElementById("nombre_operacion").value;
+          datosJson.nombre_operacion = nombreOpVal;
+          datosJson.cantidad_de_carros = inputTotalCarros.value;
+          datosJson.cantidad_de_armas = inputTotalArmas.value;
+          datosJson.cantidad_de_drogas = inputTotalDrogas.value;
+          datosJson.cantidad_de_combustible = inputTotalCombustible.value;
+
+          try {
+            // ============================================================
+
+// ============================================================
+// AGREGAR INFRACTORES A datosJson
+// ============================================================
+
+const infractores = {};
+
+// Buscar TODOS los campos que pertenecen a infractores
+document.querySelectorAll('[name^="infractores["]').forEach(campo => {
+
+    const match = campo.name.match(
+        /^infractores\[(\d+)\]\[([^\]]+)\]$/
+    );
+
+    // Si el nombre no tiene el formato esperado, ignorarlo
+    if (!match) return;
+
+    const numero = match[1];
+    const nombreCampo = match[2];
+
+    // Crear objeto para ese infractor
+    if (!infractores[numero]) {
+        infractores[numero] = {};
+    }
+
+    // Guardar el valor
+    infractores[numero][nombreCampo] = campo.value || "";
+});
+
+
+// ============================================================
+// CONVERTIR OBJETO A ARRAY
+// ============================================================
+
+datosJson.infractores = Object.values(infractores);
+
+
+// ============================================================
+// VERIFICACIÓN ANTES DE ENVIAR
+// ============================================================
+
+console.log("========================================");
+console.log("INFRACTORES A ENVIAR:");
+console.log("========================================");
+
+console.log(
+    "TOTAL DE INFRACTORES:",
+    datosJson.infractores.length
+);
+
+console.log(
+    "DATOS DE INFRACTORES:",
+    datosJson.infractores
+);
+
+console.log(
+    "DATOS JSON COMPLETOS:",
+    datosJson
+);
+
+console.log("========================================");
+
+
+// ============================================================
+// ENVÍO DE DATOS AL BACKEND
+// ============================================================
+
+try {
+
+    const response = await fetch(
+        "http://localhost:3000/api/operaciones",
+        {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(datosJson)
+        }
+    );
+
+
+    // ========================================================
+    // LEER RESPUESTA DEL SERVIDOR
+    // ========================================================
+
+    const resultado = await response.json();
+
+    console.log("========================================");
+    console.log("RESPUESTA DEL SERVIDOR:");
+    console.log(resultado);
+    console.log("========================================");
+
+
+    // ========================================================
+    // COMPROBAR ERROR
+    // ========================================================BINFRAC
+
+    if (!response.ok || !resultado.success) {
+
+        throw new Error(
+            resultado.message ||
+            "El servidor no pudo guardar la operación."
+        );
+    }
+
+
+    // ========================================================
+    // ÉXITO
+    // ========================================================
+
+    console.log("========================================");
+    console.log("✓ OPERACIÓN GUARDADA CORRECTAMENTE");
+    console.log("========================================");
+
+    console.log(
+        "Número de operación:",
+        resultado.nombre_generado
+    );
+
+
+    alert(
+        "Operación registrada correctamente.\n\n" +
+        "Número de operación: " +
+        resultado.nombre_generado
+    );
+
+
+} catch (error) {
+
+    console.error("========================================");
+    console.error("ERROR AL GUARDAR:");
+    console.error(error);
+    console.error("========================================");
+
+    alert(
+        "Error al guardar en el servidor:\n\n" +
+        error.message
+    );
+}
+
+
+
+
+
+
+
+
+
+
+
+            const resultado = await response.json();
+            
+            if (resultado.success) {
+              alert(`¡Operación registrada y enviada correctamente!\nCódigo asignado: ${resultado.nombre_generado}`);
+              formOperativo.reset();
+              cargarSecuenciasDesdeBD(); // Actualiza las secuencias para el siguiente registro
+              actualizarInfractores();
+            } else {
+              alert("Error al guardar en el servidor: " + (resultado.message || "Desconocido"));
+            }
+          } catch (error) {
+            console.error("Error de conexión con el servidor backend:", error);
+            alert("No se pudo conectar con el servidor backend para registrar la operación.");
+          }
+        });
+      });
+    </script>
