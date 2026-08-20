@@ -2724,221 +2724,251 @@
             });
         });
 
-        const formOperativo = document.querySelector("form");
-        formOperativo.addEventListener("submit", async function (e) {
-          e.preventDefault();
 
-          evaluarPonderacionOperacion();
 
-          const formData = new FormData(formOperativo);
-          const datosJson = {};
 
-          formData.forEach((value, key) => {
-            if (datosJson[key]) {
-              if (!Array.isArray(datosJson[key])) {
+
+
+       const formOperativo = document.querySelector("form");
+
+formOperativo.addEventListener("submit", async function (e) {
+
+    e.preventDefault();
+
+    evaluarPonderacionOperacion();
+
+    // ============================================================
+    // RECOPILAR DATOS DEL FORMULARIO
+    // ============================================================
+
+    const formData = new FormData(formOperativo);
+    const datosJson = {};
+
+    formData.forEach((value, key) => {
+
+        if (datosJson[key]) {
+
+            if (!Array.isArray(datosJson[key])) {
                 datosJson[key] = [datosJson[key]];
-              }
-              datosJson[key].push(value);
-            } else {
-              datosJson[key] = value;
             }
-          });
 
-          const nombreOpVal = document.getElementById("nombre_operacion").value;
-          datosJson.nombre_operacion = nombreOpVal;
-          datosJson.cantidad_de_carros = inputTotalCarros.value;
-          datosJson.cantidad_de_armas = inputTotalArmas.value;
-          datosJson.cantidad_de_drogas = inputTotalDrogas.value;
-          datosJson.cantidad_de_combustible = inputTotalCombustible.value;
+            datosJson[key].push(value);
 
-          try {
-            // ============================================================
+        } else {
 
-// ============================================================
-// AGREGAR INFRACTORES A datosJson
-// ============================================================
+            datosJson[key] = value;
 
-const infractores = {};
-
-// Buscar TODOS los campos que pertenecen a infractores
-document.querySelectorAll('[name^="infractores["]').forEach(campo => {
-
-    const match = campo.name.match(
-        /^infractores\[(\d+)\]\[([^\]]+)\]$/
-    );
-
-    // Si el nombre no tiene el formato esperado, ignorarlo
-    if (!match) return;
-
-    const numero = match[1];
-    const nombreCampo = match[2];
-
-    // Crear objeto para ese infractor
-    if (!infractores[numero]) {
-        infractores[numero] = {};
-    }
-
-    // Guardar el valor
-    infractores[numero][nombreCampo] = campo.value || "";
-});
-
-
-// ============================================================
-// CONVERTIR OBJETO A ARRAY
-// ============================================================
-
-datosJson.infractores = Object.values(infractores);
-
-
-// ============================================================
-// VERIFICACIÓN ANTES DE ENVIAR
-// ============================================================
-
-console.log("========================================");
-console.log("INFRACTORES A ENVIAR:");
-console.log("========================================");
-
-console.log(
-    "TOTAL DE INFRACTORES:",
-    datosJson.infractores.length
-);
-
-console.log(
-    "DATOS DE INFRACTORES:",
-    datosJson.infractores
-);
-
-console.log(
-    "DATOS JSON COMPLETOS:",
-    datosJson
-);
-
-console.log("========================================");
-
-
-// ============================================================
-// ENVÍO DE DATOS AL BACKEND
-// ============================================================
-
-try {
-
-    const response = await fetch(
-        "http://localhost:3000/api/operaciones",
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(datosJson)
         }
-    );
 
-    const resultado = await response.json();
+    });
 
-    console.log("RESPUESTA:", resultado);
 
-    if (!response.ok) {
-        throw new Error(
-            resultado.message || "Error al registrar"
-        );
-    }
+    // ============================================================
+    // DATOS CALCULADOS
+    // ============================================================
 
-    alert("Operación registrada correctamente");
+    const nombreOpVal =
+        document.getElementById("nombre_operacion").value;
 
-} catch (error) {
+    datosJson.nombre_operacion = nombreOpVal;
 
-    console.error("ERROR AL GUARDAR:", error);
+    datosJson.cantidad_de_carros =
+        inputTotalCarros.value;
 
-    alert(
-        "Error de conexión con el servidor: " +
-        error.message
-    );
+    datosJson.cantidad_de_armas =
+        inputTotalArmas.value;
 
-}
+    datosJson.cantidad_de_drogas =
+        inputTotalDrogas.value;
 
-    // ========================================================
-    // LEER RESPUESTA DEL SERVIDOR
-    // ========================================================
+    datosJson.cantidad_de_combustible =
+        inputTotalCombustible.value;
 
-    const resultado = await response.json();
+
+    // ============================================================
+    // AGREGAR INFRACTORES
+    // ============================================================
+
+    const infractores = {};
+
+    document
+        .querySelectorAll('[name^="infractores["]')
+        .forEach(campo => {
+
+            const match = campo.name.match(
+                /^infractores\[(\d+)\]\[([^\]]+)\]$/
+            );
+
+            if (!match) return;
+
+            const numero = match[1];
+            const nombreCampo = match[2];
+
+            if (!infractores[numero]) {
+                infractores[numero] = {};
+            }
+
+            infractores[numero][nombreCampo] =
+                campo.value || "";
+
+        });
+
+
+    // ============================================================
+    // CONVERTIR A ARRAY
+    // ============================================================
+
+    datosJson.infractores =
+        Object.values(infractores);
+
+
+    // ============================================================
+    // MOSTRAR DATOS
+    // ============================================================
 
     console.log("========================================");
-    console.log("RESPUESTA DEL SERVIDOR:");
-    console.log(resultado);
-    console.log("========================================");
-
-
-    // ========================================================
-    // COMPROBAR ERROR
-    // ========================================================BINFRAC
-
-    if (!response.ok || !resultado.success) {
-
-        throw new Error(
-            resultado.message ||
-            "El servidor no pudo guardar la operación."
-        );
-    }
-
-
-    // ========================================================
-    // ÉXITO
-    // ========================================================
-
-    console.log("========================================");
-    console.log("✓ OPERACIÓN GUARDADA CORRECTAMENTE");
+    console.log("INFRACTORES A ENVIAR:");
     console.log("========================================");
 
     console.log(
-        "Número de operación:",
-        resultado.nombre_generado
+        "TOTAL DE INFRACTORES:",
+        datosJson.infractores.length
     );
 
-
-    alert(
-        "Operación registrada correctamente.\n\n" +
-        "Número de operación: " +
-        resultado.nombre_generado
+    console.log(
+        "DATOS DE INFRACTORES:",
+        datosJson.infractores
     );
 
-
-} catch (error) {
-
-    console.error("========================================");
-    console.error("ERROR AL GUARDAR:");
-    console.error(error);
-    console.error("========================================");
-
-    alert(
-        "Error al guardar en el servidor:\n\n" +
-        error.message
+    console.log(
+        "DATOS JSON COMPLETOS:",
+        datosJson
     );
-}
+
+    console.log("========================================");
 
 
+    // ============================================================
+    // ENVIAR AL BACKEND
+    // ============================================================
 
+    try {
 
+        const response = await fetch(
+            "http://localhost:3000/api/operaciones",
+            {
+                method: "POST",
 
+                headers: {
+                    "Content-Type": "application/json"
+                },
 
-
-
-
-
-
-            const resultado = await response.json();
-            
-            if (resultado.success) {
-              alert(`¡Operación registrada y enviada correctamente!\nCódigo asignado: ${resultado.nombre_generado}`);
-              formOperativo.reset();
-              cargarSecuenciasDesdeBD(); // Actualiza las secuencias para el siguiente registro
-              actualizarInfractores();
-            } else {
-              alert("Error al guardar en el servidor: " + (resultado.message || "Desconocido"));
+                body: JSON.stringify(datosJson)
             }
-          } catch (error) {
-            console.error("Error de conexión con el servidor backend:", error);
-            alert("No se pudo conectar con el servidor backend para registrar la operación.");
-          }
-        });
+        );
+
+
+        // ========================================================
+        // RESPUESTA DEL SERVIDOR
+        // ========================================================
+
+        console.log("FETCH TERMINÓ");
+        console.log("STATUS:", response.status);
+        console.log("OK:", response.ok);
+
+
+        const resultado =
+            await response.json();
+
+
+        console.log(
+            "RESPUESTA DEL SERVIDOR:",
+            resultado
+        );
+
+
+        // ========================================================
+        // VALIDAR RESPUESTA
+        // ========================================================
+
+        if (!response.ok || !resultado.success) {
+
+            throw new Error(
+                resultado.message ||
+                "Error al registrar la operación"
+            );
+
+        }
+
+
+        // ========================================================
+        // ÉXITO
+        // ========================================================
+
+        console.log("========================================");
+        console.log("✓ OPERACIÓN GUARDADA CORRECTAMENTE");
+        console.log("========================================");
+
+        console.log(
+            "Número de operación:",
+            resultado.nombre_generado
+        );
+
+        console.log(
+            "ID operación DIGIN:",
+            resultado.operacion_digin_id
+        );
+
+        console.log(
+            "ID operativo:",
+            resultado.operativo_id
+        );
+
+        console.log(
+            "Total infractores registrados:",
+            resultado.total_infractores
+        );
+
+
+        alert(
+            "¡Operación registrada correctamente!\n\n" +
+            "Número de operación: " +
+            resultado.nombre_generado +
+            "\n\n" +
+            "Infractores registrados: " +
+            resultado.total_infractores
+        );
+
+
+        // ========================================================
+        // ACTUALIZAR FORMULARIO
+        // ========================================================
+
+        formOperativo.reset();
+
+        cargarSecuenciasDesdeBD();
+
+        actualizarInfractores();
+
+
+    } catch (error) {
+
+        console.error("========================================");
+        console.error("ERROR AL GUARDAR:");
+        console.error("========================================");
+
+        console.error(error);
+
+        console.error("========================================");
+
+
+        alert(
+            "Error al guardar en el servidor:\n\n" +
+            error.message
+        );
+
+    }
+
+});
       });
     </script>
